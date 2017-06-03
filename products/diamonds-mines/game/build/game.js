@@ -157,70 +157,6 @@
 
 }).call(this);
 
-(function() {
-  Phacker.Game.Rope = (function() {
-    function Rope(gm) {
-      this.gm = gm;
-      this._fle_ = 'Rope';
-      this.Pm = this.gm.parameters;
-      this.pm = this.Pm.rope = {
-        x0: this.Pm.bg.w2,
-        w: 329,
-        h: 375,
-        r: 20
-      };
-      this.pm.y0 = this.gm.gameOptions.fullscreen ? this.Pm.bg.y0 + 50 : this.Pm.bg.y0 + 15;
-      this.pm.w2 = this.pm.w / 2;
-      this.pmw = this.Pm.whl = {
-        x1: this.pm.x0 - this.pm.w2 + this.pm.r,
-        y1: this.pm.y0 + this.pm.r,
-        x2: this.pm.x0 + this.pm.w2 - this.pm.r
-      };
-      this.pmw.y2 = this.pmw.y1;
-      this.pmw.x3 = this.pmw.x2;
-      this.pmw.y3 = this.pm.y0 + this.pm.h - this.pm.r;
-      this.pmw.x4 = this.pmw.x1;
-      this.pmw.y4 = this.pmw.y3;
-      this.draw();
-    }
-
-    Rope.prototype.draw = function() {
-      this.rop = this.gm.add.sprite(this.pm.x0, this.pm.y0, 'rope');
-      this.rop.anchor.setTo(0.5, 0);
-      this.whl1 = this.gm.add.sprite(this.pmw.x1, this.pmw.y1, 'wheel');
-      this.whl1.anchor.setTo(0.5, 0.5);
-      this.mk_tween(this.whl1, {
-        angle: 360
-      }, 1700);
-      this.whl2 = this.gm.add.sprite(this.pmw.x2, this.pmw.y2, 'wheel');
-      this.whl2.anchor.setTo(0.5, 0.5);
-      this.mk_tween(this.whl2, {
-        angle: 360
-      }, 1800);
-      this.whl3 = this.gm.add.sprite(this.pmw.x3, this.pmw.y3, 'wheel');
-      this.whl3.anchor.setTo(0.5, 0.5);
-      this.mk_tween(this.whl3, {
-        angle: 360
-      }, 1900);
-      this.whl4 = this.gm.add.sprite(this.pmw.x4, this.pmw.y4, 'wheel');
-      this.whl4.anchor.setTo(0.5, 0.5);
-      return this.mk_tween(this.whl4, {
-        angle: 360
-      }, 2000);
-    };
-
-    Rope.prototype.mk_tween = function(spt, lst, t) {
-      var tw;
-      tw = this.gm.add.tween(spt);
-      return tw.to(lst, t, Phaser.Easing.Linear.None, true, 0, -1);
-    };
-
-    return Rope;
-
-  })();
-
-}).call(this);
-
 
 /*  written by apch  on 2017-05-31 */
 
@@ -352,7 +288,7 @@
         w: 10,
         h: 10,
         n_in: 0,
-        max_in: 20,
+        max_in: 15,
         last_used: -1,
         n: 97,
         dmd_in_game: 15,
@@ -371,8 +307,8 @@
       if (!this.Pm.btn.game_started) {
         return;
       }
-      console.log(this._fle_, ': ', this.pm.last_used);
       if (this.pm.n_in < this.pm.max_in && this.pm.last_used < this.pm.n) {
+        this.pm.last_used++;
         this.dmds[this.pm.last_used].body["static"] = false;
         return this.pm.n_in++;
       }
@@ -446,6 +382,159 @@
 }).call(this);
 
 (function() {
+  Phacker.Game.Baskets = (function() {
+    function Baskets(gm) {
+      this.gm = gm;
+      this._fle_ = 'Baskets';
+      this.Pm = this.gm.parameters;
+      this.pm = this.Pm.bsks = {
+        x1: this.Pm.rope.x0 - this.Pm.rope.w / 2 + 2,
+        y1: this.gm.parameters.rope.y0 + 2,
+        x2: this.Pm.rope.x0 + this.Pm.rope.w / 2 - 2,
+        y2: this.gm.parameters.rope.y0 + 2,
+        x3: this.Pm.rope.x0 + this.Pm.rope.w / 2 - 2,
+        y3: this.gm.parameters.rope.y0 + this.Pm.rope.h - 10,
+        x4: this.Pm.rope.x0 - this.Pm.rope.w / 2 + 2,
+        y4: this.gm.parameters.rope.y0 + this.Pm.rope.h - 2,
+        n: 6,
+        v: this.gm.gameOptions.vx0
+      };
+      this.bska = [];
+      this.mk_bsk();
+    }
+
+    Baskets.prototype.mk_bsk = function() {
+      var bkO;
+      this.bska.push(bkO = new Phacker.Game.OneBasket(this.gm, {
+        x: this.pm.x2,
+        y: this.pm.y2,
+        branch: 'E'
+      }));
+      return console.log(this._fle_, ': ', this.bska);
+    };
+
+    return Baskets;
+
+  })();
+
+}).call(this);
+
+(function() {
+  Phacker.Game.OneBasket = (function() {
+    function OneBasket(gm, lstP1) {
+      this.gm = gm;
+      this.lstP = lstP1;
+      this._fle_ = 'One bsk';
+      this.Pm = this.gm.parameters;
+      this.pm = this.Pm.bsk = {
+        xrot1: this.Pm.rope.x0 - 70,
+        xrot2: this.Pm.rope.x0 + this.Pm.rope.w / 6,
+        w: 42,
+        h: 54,
+        v: this.Pm.bsks.v,
+        names: ['blue_basket', 'green_basket', 'normal_basket', 'pink_basket', 'red_basket']
+      };
+      this.bsk = {};
+      this.mk_bsk(this.lstP);
+    }
+
+    OneBasket.prototype.mk_bsk = function(lstP) {
+      var col;
+      col = this.gm.rnd.integerInRange(0, 4);
+      this.bsk = this.gm.add.sprite(lstP.x, lstP.y, this.pm.names[col]);
+      this.gm.physics.box2d.enable(this.bsk);
+      this.bsk.body.kinematic = true;
+      this.bsk.body.friction = 0.01;
+      this.bsk.body.pm = {};
+      this.bsk.body.pm.branch = lstP.branch;
+      this.bsk.body.pm.color = col;
+      this.bsk.body.pm.down = false;
+      if (this.bsk.body.pm.branch === 'E') {
+        this.bsk.body.setZeroVelocity();
+        return this.bsk.body.moveDown(this.pm.v);
+      } else if (this.bsk.body.pm.branch === 'S') {
+        this.bsk.body.setZeroVelocity();
+        return this.bsk.body.moveLeft(this.pm.v);
+      } else if (this.bsk.body.pm.branch === 'W') {
+        this.bsk.body.setZeroVelocity();
+        return this.bsk.body.moveUp(this.pm.v);
+      } else if (this.bsk.body.pm.branch === 'N') {
+        this.bsk.body.setZeroVelocity();
+        return this.bsk.body.moveRight(this.pm.v);
+      }
+    };
+
+    return OneBasket;
+
+  })();
+
+}).call(this);
+
+(function() {
+  Phacker.Game.Rope = (function() {
+    function Rope(gm) {
+      this.gm = gm;
+      this._fle_ = 'Rope';
+      this.Pm = this.gm.parameters;
+      this.pm = this.Pm.rope = {
+        x0: this.Pm.bg.w2,
+        w: 329,
+        h: 375,
+        r: 20
+      };
+      this.pm.y0 = this.gm.gameOptions.fullscreen ? this.Pm.bg.y0 + 50 : this.Pm.bg.y0 + 15;
+      this.pm.w2 = this.pm.w / 2;
+      this.pmw = this.Pm.whl = {
+        x1: this.pm.x0 - this.pm.w2 + this.pm.r,
+        y1: this.pm.y0 + this.pm.r,
+        x2: this.pm.x0 + this.pm.w2 - this.pm.r
+      };
+      this.pmw.y2 = this.pmw.y1;
+      this.pmw.x3 = this.pmw.x2;
+      this.pmw.y3 = this.pm.y0 + this.pm.h - this.pm.r;
+      this.pmw.x4 = this.pmw.x1;
+      this.pmw.y4 = this.pmw.y3;
+      this.draw();
+    }
+
+    Rope.prototype.draw = function() {
+      this.rop = this.gm.add.sprite(this.pm.x0, this.pm.y0, 'rope');
+      this.rop.anchor.setTo(0.5, 0);
+      this.whl1 = this.gm.add.sprite(this.pmw.x1, this.pmw.y1, 'wheel');
+      this.whl1.anchor.setTo(0.5, 0.5);
+      this.mk_tween(this.whl1, {
+        angle: 360
+      }, 1700);
+      this.whl2 = this.gm.add.sprite(this.pmw.x2, this.pmw.y2, 'wheel');
+      this.whl2.anchor.setTo(0.5, 0.5);
+      this.mk_tween(this.whl2, {
+        angle: 360
+      }, 1800);
+      this.whl3 = this.gm.add.sprite(this.pmw.x3, this.pmw.y3, 'wheel');
+      this.whl3.anchor.setTo(0.5, 0.5);
+      this.mk_tween(this.whl3, {
+        angle: 360
+      }, 1900);
+      this.whl4 = this.gm.add.sprite(this.pmw.x4, this.pmw.y4, 'wheel');
+      this.whl4.anchor.setTo(0.5, 0.5);
+      return this.mk_tween(this.whl4, {
+        angle: 360
+      }, 2000);
+    };
+
+    Rope.prototype.mk_tween = function(spt, lst, t) {
+      var tw;
+      tw = this.gm.add.tween(spt);
+      return tw.to(lst, t, Phaser.Easing.Linear.None, true, 0, -1);
+    };
+
+    return Rope;
+
+  })();
+
+}).call(this);
+
+(function() {
   var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
 
@@ -477,6 +566,7 @@
       this.mecanicO = new Phacker.Game.Mecanic(this.game);
       this.buttomO = new Phacker.Game.Buttom(this.game);
       this.gateO = new Phacker.Game.Gate(this.game, this.mecanicO);
+      this.basketsO = new Phacker.Game.Baskets(this.game);
       return this.diamondsO = new Phacker.Game.Diamonds(this.game, this.bottomO);
     };
 
