@@ -47,5 +47,31 @@ class Phacker.Game.OneBasket
         else if  @bsk.body.pm.branch is 'W' then @bsk.body.setZeroVelocity() ;  @bsk.body.moveUp    @pm.v
         else if  @bsk.body.pm.branch is 'N' then @bsk.body.setZeroVelocity() ;  @bsk.body.moveRight @pm.v
 
-        tl = new Phacker.Game.Tools @gm
-        tl.show_vertices @bsk, @vertices
+#        tl = new Phacker.Game.Tools @gm
+#        tl.show_vertices @bsk, @vertices
+
+    #.----------.----------
+    # move one basket
+    #.----------.----------
+    move : () ->
+        if @bsk.body.pm.branch is 'N' and  @bsk.x > @Pm.bsks.x2
+            @bsk.body.setZeroVelocity()
+            @bsk.body.moveDown  @pm.v
+            @bsk.body.pm.branch = 'E'
+
+        else if @bsk.body.pm.branch is 'E' and @bsk.y > @Pm.bsks.y3
+            @bsk.body.setZeroVelocity()
+            @bsk.body.moveLeft  @pm.v
+            @bsk.body.pm.branch = 'S'
+
+        else if @bsk.body.pm.branch is 'S' and @bsk.x < @Pm.bsks.x4
+            @bsk.body.setZeroVelocity()
+            @bsk.body.moveUp  @pm.v
+            @bsk.body.pm.branch = 'W'
+
+        else if @bsk.body.pm.branch is 'W' and @bsk.y < @Pm.bsks.y1
+            console.log @_fle_,': ', @bsk.y , @Pm.bsks.y1
+            @bsk.body.setZeroVelocity()
+            @bsk.body.moveRight  @pm.v
+            @bsk.body.pm.branch = 'N'
+

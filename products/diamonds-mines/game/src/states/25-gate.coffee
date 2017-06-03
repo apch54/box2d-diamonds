@@ -87,5 +87,5 @@ class Phacker.Game.Gate
     #.----------.----------
     # bind
     #.----------.----------
-    #bind: (mecO) -> @mecO = mecO
+    #bind: (bsksO) -> @bsksO  = bsksO
 

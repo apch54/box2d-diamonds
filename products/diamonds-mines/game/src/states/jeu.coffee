@@ -4,6 +4,7 @@ class @YourGame extends Phacker.GameState
         super() #Required
         @gateO.check()
         @diamondsO.check()
+        @basketsO.move() if @buttonO.pm.game_started
 #        @game.debug.box2dWorld()
 #        @game.debug.body @btm
 
@@ -21,10 +22,12 @@ class @YourGame extends Phacker.GameState
         @ropeO      = new   Phacker.Game.Rope       @game
         @bottomO    = new   Phacker.Game.Bottom     @game
         @mecanicO   = new   Phacker.Game.Mecanic    @game
-        @buttomO    = new   Phacker.Game.Buttom     @game
+        @buttonO    = new   Phacker.Game.Buttom     @game
         @gateO      = new   Phacker.Game.Gate       @game, @mecanicO
         @basketsO   = new   Phacker.Game.Baskets    @game
         @diamondsO  = new   Phacker.Game.Diamonds   @game, @bottomO
+
+        @buttonO.bind @basketsO
 
         #@gateO.bind @mecanicO
 

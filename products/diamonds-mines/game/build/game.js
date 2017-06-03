@@ -64,6 +64,70 @@
 
 }).call(this);
 
+(function() {
+  Phacker.Game.Rope = (function() {
+    function Rope(gm) {
+      this.gm = gm;
+      this._fle_ = 'Rope';
+      this.Pm = this.gm.parameters;
+      this.pm = this.Pm.rope = {
+        x0: this.Pm.bg.w2,
+        w: 329,
+        h: 375,
+        r: 20
+      };
+      this.pm.y0 = this.gm.gameOptions.fullscreen ? this.Pm.bg.y0 + 50 : this.Pm.bg.y0 + 20;
+      this.pm.w2 = this.pm.w / 2;
+      this.pmw = this.Pm.whl = {
+        x1: this.pm.x0 - this.pm.w2 + this.pm.r,
+        y1: this.pm.y0 + this.pm.r,
+        x2: this.pm.x0 + this.pm.w2 - this.pm.r
+      };
+      this.pmw.y2 = this.pmw.y1;
+      this.pmw.x3 = this.pmw.x2;
+      this.pmw.y3 = this.pm.y0 + this.pm.h - this.pm.r;
+      this.pmw.x4 = this.pmw.x1;
+      this.pmw.y4 = this.pmw.y3;
+      this.draw();
+    }
+
+    Rope.prototype.draw = function() {
+      this.rop = this.gm.add.sprite(this.pm.x0, this.pm.y0, 'rope');
+      this.rop.anchor.setTo(0.5, 0);
+      this.whl1 = this.gm.add.sprite(this.pmw.x1, this.pmw.y1, 'wheel');
+      this.whl1.anchor.setTo(0.5, 0.5);
+      this.mk_tween(this.whl1, {
+        angle: 360
+      }, 1700);
+      this.whl2 = this.gm.add.sprite(this.pmw.x2, this.pmw.y2, 'wheel');
+      this.whl2.anchor.setTo(0.5, 0.5);
+      this.mk_tween(this.whl2, {
+        angle: 360
+      }, 1800);
+      this.whl3 = this.gm.add.sprite(this.pmw.x3, this.pmw.y3, 'wheel');
+      this.whl3.anchor.setTo(0.5, 0.5);
+      this.mk_tween(this.whl3, {
+        angle: 360
+      }, 1900);
+      this.whl4 = this.gm.add.sprite(this.pmw.x4, this.pmw.y4, 'wheel');
+      this.whl4.anchor.setTo(0.5, 0.5);
+      return this.mk_tween(this.whl4, {
+        angle: 360
+      }, 2000);
+    };
+
+    Rope.prototype.mk_tween = function(spt, lst, t) {
+      var tw;
+      tw = this.gm.add.tween(spt);
+      return tw.to(lst, t, Phaser.Easing.Linear.None, true, 0, -1);
+    };
+
+    return Rope;
+
+  })();
+
+}).call(this);
+
 
 /*  written by apch on 2017-05-06
        ... --- ...
@@ -180,13 +244,14 @@
     };
 
     Buttom.prototype.on_tap = function() {
+      this.bsksO.mk_bsk();
       this.btn.y = 800;
       this.btn.alpha = 0;
       return this.pm.game_started = true;
     };
 
-    Buttom.prototype.bind = function(bsk) {
-      return this.bskO = bsk;
+    Buttom.prototype.bind = function(bsks) {
+      return this.bsksO = bsks;
     };
 
     return Buttom;
@@ -400,7 +465,6 @@
         v: this.gm.gameOptions.vx0
       };
       this.bska = [];
-      this.mk_bsk();
     }
 
     Baskets.prototype.mk_bsk = function() {
@@ -410,6 +474,24 @@
         y: this.pm.y2,
         branch: 'E'
       }));
+    };
+
+    Baskets.prototype.move = function() {
+      var b, i, l, len, li, ref, results;
+      if ((l = this.bska.length) < this.pm.n) {
+        b = this.bska[l - 1].bsk;
+        li = 2 * (this.Pm.rope.w + this.Pm.rope.h) / this.pm.n;
+        if (this.gm.math.fuzzyEqual(b.y - this.pm.y2, li, 4)) {
+          this.mk_bsk();
+        }
+      }
+      ref = this.bska;
+      results = [];
+      for (i = 0, len = ref.length; i < len; i++) {
+        b = ref[i];
+        results.push(b.move());
+      }
+      return results;
     };
 
     return Baskets;
@@ -439,7 +521,7 @@
     }
 
     OneBasket.prototype.mk_bsk = function(lstP) {
-      var col, tl;
+      var col;
       col = this.gm.rnd.integerInRange(0, 4);
       this.bsk = this.gm.add.sprite(lstP.x, lstP.y, this.pm.names[col]);
       this.gm.physics.box2d.enable(this.bsk);
@@ -452,86 +534,41 @@
       this.bsk.body.pm.down = false;
       if (this.bsk.body.pm.branch === 'E') {
         this.bsk.body.setZeroVelocity();
-        this.bsk.body.moveDown(this.pm.v);
+        return this.bsk.body.moveDown(this.pm.v);
       } else if (this.bsk.body.pm.branch === 'S') {
         this.bsk.body.setZeroVelocity();
-        this.bsk.body.moveLeft(this.pm.v);
+        return this.bsk.body.moveLeft(this.pm.v);
       } else if (this.bsk.body.pm.branch === 'W') {
         this.bsk.body.setZeroVelocity();
-        this.bsk.body.moveUp(this.pm.v);
+        return this.bsk.body.moveUp(this.pm.v);
       } else if (this.bsk.body.pm.branch === 'N') {
         this.bsk.body.setZeroVelocity();
-        this.bsk.body.moveRight(this.pm.v);
+        return this.bsk.body.moveRight(this.pm.v);
       }
-      tl = new Phacker.Game.Tools(this.gm);
-      return tl.show_vertices(this.bsk, this.vertices);
+    };
+
+    OneBasket.prototype.move = function() {
+      if (this.bsk.body.pm.branch === 'N' && this.bsk.x > this.Pm.bsks.x2) {
+        this.bsk.body.setZeroVelocity();
+        this.bsk.body.moveDown(this.pm.v);
+        return this.bsk.body.pm.branch = 'E';
+      } else if (this.bsk.body.pm.branch === 'E' && this.bsk.y > this.Pm.bsks.y3) {
+        this.bsk.body.setZeroVelocity();
+        this.bsk.body.moveLeft(this.pm.v);
+        return this.bsk.body.pm.branch = 'S';
+      } else if (this.bsk.body.pm.branch === 'S' && this.bsk.x < this.Pm.bsks.x4) {
+        this.bsk.body.setZeroVelocity();
+        this.bsk.body.moveUp(this.pm.v);
+        return this.bsk.body.pm.branch = 'W';
+      } else if (this.bsk.body.pm.branch === 'W' && this.bsk.y < this.Pm.bsks.y1) {
+        console.log(this._fle_, ': ', this.bsk.y, this.Pm.bsks.y1);
+        this.bsk.body.setZeroVelocity();
+        this.bsk.body.moveRight(this.pm.v);
+        return this.bsk.body.pm.branch = 'N';
+      }
     };
 
     return OneBasket;
-
-  })();
-
-}).call(this);
-
-(function() {
-  Phacker.Game.Rope = (function() {
-    function Rope(gm) {
-      this.gm = gm;
-      this._fle_ = 'Rope';
-      this.Pm = this.gm.parameters;
-      this.pm = this.Pm.rope = {
-        x0: this.Pm.bg.w2,
-        w: 329,
-        h: 375,
-        r: 20
-      };
-      this.pm.y0 = this.gm.gameOptions.fullscreen ? this.Pm.bg.y0 + 50 : this.Pm.bg.y0 + 15;
-      this.pm.w2 = this.pm.w / 2;
-      this.pmw = this.Pm.whl = {
-        x1: this.pm.x0 - this.pm.w2 + this.pm.r,
-        y1: this.pm.y0 + this.pm.r,
-        x2: this.pm.x0 + this.pm.w2 - this.pm.r
-      };
-      this.pmw.y2 = this.pmw.y1;
-      this.pmw.x3 = this.pmw.x2;
-      this.pmw.y3 = this.pm.y0 + this.pm.h - this.pm.r;
-      this.pmw.x4 = this.pmw.x1;
-      this.pmw.y4 = this.pmw.y3;
-      this.draw();
-    }
-
-    Rope.prototype.draw = function() {
-      this.rop = this.gm.add.sprite(this.pm.x0, this.pm.y0, 'rope');
-      this.rop.anchor.setTo(0.5, 0);
-      this.whl1 = this.gm.add.sprite(this.pmw.x1, this.pmw.y1, 'wheel');
-      this.whl1.anchor.setTo(0.5, 0.5);
-      this.mk_tween(this.whl1, {
-        angle: 360
-      }, 1700);
-      this.whl2 = this.gm.add.sprite(this.pmw.x2, this.pmw.y2, 'wheel');
-      this.whl2.anchor.setTo(0.5, 0.5);
-      this.mk_tween(this.whl2, {
-        angle: 360
-      }, 1800);
-      this.whl3 = this.gm.add.sprite(this.pmw.x3, this.pmw.y3, 'wheel');
-      this.whl3.anchor.setTo(0.5, 0.5);
-      this.mk_tween(this.whl3, {
-        angle: 360
-      }, 1900);
-      this.whl4 = this.gm.add.sprite(this.pmw.x4, this.pmw.y4, 'wheel');
-      this.whl4.anchor.setTo(0.5, 0.5);
-      return this.mk_tween(this.whl4, {
-        angle: 360
-      }, 2000);
-    };
-
-    Rope.prototype.mk_tween = function(spt, lst, t) {
-      var tw;
-      tw = this.gm.add.tween(spt);
-      return tw.to(lst, t, Phaser.Easing.Linear.None, true, 0, -1);
-    };
-
-    return Rope;
 
   })();
 
@@ -551,7 +588,10 @@
     YourGame.prototype.update = function() {
       YourGame.__super__.update.call(this);
       this.gateO.check();
-      return this.diamondsO.check();
+      this.diamondsO.check();
+      if (this.buttonO.pm.game_started) {
+        return this.basketsO.move();
+      }
     };
 
     YourGame.prototype.resetPlayer = function() {
@@ -567,10 +607,11 @@
       this.ropeO = new Phacker.Game.Rope(this.game);
       this.bottomO = new Phacker.Game.Bottom(this.game);
       this.mecanicO = new Phacker.Game.Mecanic(this.game);
-      this.buttomO = new Phacker.Game.Buttom(this.game);
+      this.buttonO = new Phacker.Game.Buttom(this.game);
       this.gateO = new Phacker.Game.Gate(this.game, this.mecanicO);
       this.basketsO = new Phacker.Game.Baskets(this.game);
-      return this.diamondsO = new Phacker.Game.Diamonds(this.game, this.bottomO);
+      this.diamondsO = new Phacker.Game.Diamonds(this.game, this.bottomO);
+      return this.buttonO.bind(this.basketsO);
     };
 
     return YourGame;

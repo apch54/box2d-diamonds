@@ -24,8 +24,8 @@ class Phacker.Game.Buttom
     # on tap game gegins
     #.----------.----------
     on_tap: () ->
-        #@bskO.mk_bsk()
-        @btn.y = 800  # very low down
+        @bsksO.mk_bsk() # first creation of baskets
+        @btn.y = 800   # very low down
         @btn.alpha = 0
 
         #@dmdO.start_game()
@@ -35,4 +35,4 @@ class Phacker.Game.Buttom
     #.----------.----------
     # bind witn others objects
     #.----------.----------
-    bind: (bsk) -> @bskO = bsk
+    bind: (bsks) -> @bsksO = bsks
