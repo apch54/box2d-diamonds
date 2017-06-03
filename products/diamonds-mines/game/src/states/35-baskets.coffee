@@ -22,4 +22,4 @@ class Phacker.Game.Baskets
     #.----------.----------
     mk_bsk: ->
         @bska.push bkO = new Phacker.Game.OneBasket @gm, {x: @pm.x2, y:@pm.y2, branch:'E' }
-        console.log @_fle_,': ',@bska
+        #console.log @_fle_,': ',@bska

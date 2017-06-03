@@ -8,7 +8,7 @@ class Phacker.Game.Diamonds
             w: 10
             h:10
             n_in: 0         # number of diamond in game
-            max_in :20      # max of diamond in game"
+            max_in :15      # max of diamond in game"
             last_used:-1    # last in game (dmd)
             n: 97 # number of diamonds
             dmd_in_game: 15
@@ -27,9 +27,8 @@ class Phacker.Game.Diamonds
     #.----------.----------
     check: () ->
         if not @Pm.btn.game_started  then return
-        console.log @_fle_,': ',@pm.last_used
         if @pm.n_in < @pm.max_in and @pm.last_used < @pm.n
-            #@pm.last_used++
+            @pm.last_used++
             @dmds[@pm.last_used].body.static = false
             @pm.n_in++
 
@@ -38,7 +37,8 @@ class Phacker.Game.Diamonds
     #.----------.----------
     mk_all_dmd : () ->
         col1=@gm.rnd.integerInRange(0,4) # define colors
-        col2=(col1+1)%5;        col3=(col1+2)%5
+        col2=(col1+1)%5
+        col3=(col1+2)%5
 
         for i in [0..@pm.n]
 

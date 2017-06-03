@@ -11,6 +11,8 @@ class Phacker.Game.OneBasket
             h:  54
             v: @Pm.bsks.v
             names: ['blue_basket','green_basket','normal_basket','pink_basket','red_basket']
+
+        @vertices= [ -@pm.w/2+4,-@pm.h/2,  -@pm.w/2+10,@pm.h/2-5,  @pm.w/2-10,@pm.h/2-5,  @pm.w/2-4,-@pm.h/2 ] # body basket
         @bsk = {}
 
         @mk_bsk(@lstP ) # lstP for list oparameters of the basket
@@ -27,6 +29,7 @@ class Phacker.Game.OneBasket
 
         @bsk = @gm.add.sprite lstP.x,lstP.y, @pm.names[col]
         @gm.physics.box2d.enable @bsk
+        @bsk.body.setChain @vertices
         @bsk.body.kinematic = true
         @bsk.body.friction = 0.01
         #@bsk.body.gravityScale = 0
@@ -43,3 +46,6 @@ class Phacker.Game.OneBasket
         else if  @bsk.body.pm.branch is 'S' then @bsk.body.setZeroVelocity() ;  @bsk.body.moveLeft  @pm.v
         else if  @bsk.body.pm.branch is 'W' then @bsk.body.setZeroVelocity() ;  @bsk.body.moveUp    @pm.v
         else if  @bsk.body.pm.branch is 'N' then @bsk.body.setZeroVelocity() ;  @bsk.body.moveRight @pm.v
+
+        tl = new Phacker.Game.Tools @gm
+        tl.show_vertices @bsk, @vertices

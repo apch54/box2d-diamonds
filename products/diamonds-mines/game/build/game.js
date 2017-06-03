@@ -405,12 +405,11 @@
 
     Baskets.prototype.mk_bsk = function() {
       var bkO;
-      this.bska.push(bkO = new Phacker.Game.OneBasket(this.gm, {
+      return this.bska.push(bkO = new Phacker.Game.OneBasket(this.gm, {
         x: this.pm.x2,
         y: this.pm.y2,
         branch: 'E'
       }));
-      return console.log(this._fle_, ': ', this.bska);
     };
 
     return Baskets;
@@ -434,15 +433,17 @@
         v: this.Pm.bsks.v,
         names: ['blue_basket', 'green_basket', 'normal_basket', 'pink_basket', 'red_basket']
       };
+      this.vertices = [-this.pm.w / 2 + 4, -this.pm.h / 2, -this.pm.w / 2 + 10, this.pm.h / 2 - 5, this.pm.w / 2 - 10, this.pm.h / 2 - 5, this.pm.w / 2 - 4, -this.pm.h / 2];
       this.bsk = {};
       this.mk_bsk(this.lstP);
     }
 
     OneBasket.prototype.mk_bsk = function(lstP) {
-      var col;
+      var col, tl;
       col = this.gm.rnd.integerInRange(0, 4);
       this.bsk = this.gm.add.sprite(lstP.x, lstP.y, this.pm.names[col]);
       this.gm.physics.box2d.enable(this.bsk);
+      this.bsk.body.setChain(this.vertices);
       this.bsk.body.kinematic = true;
       this.bsk.body.friction = 0.01;
       this.bsk.body.pm = {};
@@ -451,17 +452,19 @@
       this.bsk.body.pm.down = false;
       if (this.bsk.body.pm.branch === 'E') {
         this.bsk.body.setZeroVelocity();
-        return this.bsk.body.moveDown(this.pm.v);
+        this.bsk.body.moveDown(this.pm.v);
       } else if (this.bsk.body.pm.branch === 'S') {
         this.bsk.body.setZeroVelocity();
-        return this.bsk.body.moveLeft(this.pm.v);
+        this.bsk.body.moveLeft(this.pm.v);
       } else if (this.bsk.body.pm.branch === 'W') {
         this.bsk.body.setZeroVelocity();
-        return this.bsk.body.moveUp(this.pm.v);
+        this.bsk.body.moveUp(this.pm.v);
       } else if (this.bsk.body.pm.branch === 'N') {
         this.bsk.body.setZeroVelocity();
-        return this.bsk.body.moveRight(this.pm.v);
+        this.bsk.body.moveRight(this.pm.v);
       }
+      tl = new Phacker.Game.Tools(this.gm);
+      return tl.show_vertices(this.bsk, this.vertices);
     };
 
     return OneBasket;
