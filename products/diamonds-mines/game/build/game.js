@@ -508,12 +508,15 @@
       this._fle_ = 'One bsk';
       this.Pm = this.gm.parameters;
       this.pm = this.Pm.bsk = {
-        xrot1: this.Pm.rope.x0 - 70,
+        xrot1: this.Pm.rope.x0 - 90,
         xrot2: this.Pm.rope.x0 + this.Pm.rope.w / 6,
         w: 42,
         h: 54,
         v: this.Pm.bsks.v,
-        names: ['blue_basket', 'green_basket', 'normal_basket', 'pink_basket', 'red_basket']
+        names: ['blue_basket', 'green_basket', 'normal_basket', 'pink_basket', 'red_basket'],
+        xrot1: this.Pm.rope.x0 - 120,
+        xrot2: this.Pm.rope.x0 + this.Pm.rope.w / 6,
+        vtta: 250
       };
       this.vertices = [-this.pm.w / 2 + 4, -this.pm.h / 2, -this.pm.w / 2 + 10, this.pm.h / 2 - 5, this.pm.w / 2 - 10, this.pm.h / 2 - 5, this.pm.w / 2 - 4, -this.pm.h / 2];
       this.bsk = {};
@@ -548,10 +551,24 @@
     };
 
     OneBasket.prototype.move = function() {
-      if (this.bsk.body.pm.branch === 'N' && this.bsk.x > this.Pm.bsks.x2) {
-        this.bsk.body.setZeroVelocity();
-        this.bsk.body.moveDown(this.pm.v);
-        return this.bsk.body.pm.branch = 'E';
+      if (this.bsk.body.pm.branch === 'N') {
+        if (this.bsk.x > this.Pm.bsks.x2) {
+          this.bsk.body.setZeroVelocity();
+          this.bsk.body.moveDown(this.pm.v);
+          return this.bsk.body.pm.branch = 'E';
+        } else if (this.gm.math.fuzzyEqual(this.bsk.x, this.pm.xrot1, 4)) {
+          return this.bsk.body.rotateRight(this.pm.vtta);
+        } else if (!this.bsk.body.pm.down && this.gm.math.fuzzyEqual(this.bsk.body.angle, 165, 4)) {
+          this.bsk.body.pm.down = true;
+          return this.bsk.body.rotateRight(0);
+        } else if (this.gm.math.fuzzyEqual(this.bsk.x, this.pm.xrot2, 4)) {
+          return this.bsk.body.rotateLeft(this.pm.vtta);
+        } else if (this.gm.math.fuzzyEqual(this.bsk.body.angle, 0, 4)) {
+          this.bsk.body.rotateLeft(0);
+          this.bsk.body.pm.down = false;
+          this.bsk.body.angle = 0;
+          return console.log(this._fle_, ': ', this.bsk.body.angle);
+        }
       } else if (this.bsk.body.pm.branch === 'E' && this.bsk.y > this.Pm.bsks.y3) {
         this.bsk.body.setZeroVelocity();
         this.bsk.body.moveLeft(this.pm.v);
@@ -561,7 +578,6 @@
         this.bsk.body.moveUp(this.pm.v);
         return this.bsk.body.pm.branch = 'W';
       } else if (this.bsk.body.pm.branch === 'W' && this.bsk.y < this.Pm.bsks.y1) {
-        console.log(this._fle_, ': ', this.bsk.y, this.Pm.bsks.y1);
         this.bsk.body.setZeroVelocity();
         this.bsk.body.moveRight(this.pm.v);
         return this.bsk.body.pm.branch = 'N';

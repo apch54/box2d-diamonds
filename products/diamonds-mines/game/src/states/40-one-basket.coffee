@@ -2,18 +2,21 @@ class Phacker.Game.OneBasket
 
     constructor: (@gm,@lstP) -> # lstP for list oparameters of the basket
         @_fle_ = 'One bsk'
-        @Pm = @gm.parameters    # globals parameters
-        @pm = @Pm.bsk =         # one basket parameters
+        @Pm = @gm.parameters                        # globals parameters
+        @pm = @Pm.bsk =                             # one basket parameters
             # @bsk.x when basket must rotate up or down
-            xrot1: @Pm.rope.x0 - 70             # on north rope branch rotation x
-            xrot2: @Pm.rope.x0 + @Pm.rope.w/6    # on the other side
+            xrot1: @Pm.rope.x0 - 90                 # on north rope branch rotation x
+            xrot2: @Pm.rope.x0 + @Pm.rope.w/6       # on the other side
             w:  42
             h:  54
             v: @Pm.bsks.v
             names: ['blue_basket','green_basket','normal_basket','pink_basket','red_basket']
+            xrot1: @Pm.rope.x0 - 120                # on north rope branch down rotation x
+            xrot2: @Pm.rope.x0 + @Pm.rope.w/6       # back up rotation
+            vtta : 250                              # basket rotation velecity
 
         @vertices= [ -@pm.w/2+4,-@pm.h/2,  -@pm.w/2+10,@pm.h/2-5,  @pm.w/2-10,@pm.h/2-5,  @pm.w/2-4,-@pm.h/2 ] # body basket
-        @bsk = {}
+        @bsk = {}                                   #  one basket prototype
 
         @mk_bsk(@lstP ) # lstP for list oparameters of the basket
 
@@ -23,9 +26,6 @@ class Phacker.Game.OneBasket
 
     mk_bsk:(lstP)-> # make the basket; lstp={x,y,branch}
         col = @gm.rnd.integerInRange(0,4) # define color basket
-#        @bsk = @gm.add.sprite lstP.x,lstP.y, @pm.names[col] # 768x500
-#        @gm.physics.arcade.enable @bsk,Phaser.Physics.ARCADE
-#        @bsk.anchor.setTo(0.5, 0.5) # anchor in the middle of top
 
         @bsk = @gm.add.sprite lstP.x,lstP.y, @pm.names[col]
         @gm.physics.box2d.enable @bsk
@@ -54,10 +54,28 @@ class Phacker.Game.OneBasket
     # move one basket
     #.----------.----------
     move : () ->
-        if @bsk.body.pm.branch is 'N' and  @bsk.x > @Pm.bsks.x2
-            @bsk.body.setZeroVelocity()
-            @bsk.body.moveDown  @pm.v
-            @bsk.body.pm.branch = 'E'
+        if @bsk.body.pm.branch is 'N'
+            if @bsk.x > @Pm.bsks.x2   # normal rot to south a the end of branch
+                @bsk.body.setZeroVelocity()
+                @bsk.body.moveDown @pm.v
+                @bsk.body.pm.branch = 'E'
+
+            else if @gm.math.fuzzyEqual @bsk.x, @pm.xrot1, 4 # rotate down basket
+                @bsk.body.rotateRight @pm.vtta
+
+            else if not @bsk.body.pm.down  and @gm.math.fuzzyEqual @bsk.body.angle, 165, 4 # stop rotation down
+                @bsk.body.pm.down = true
+                @bsk.body.rotateRight 0
+
+            else if @gm.math.fuzzyEqual @bsk.x, @pm.xrot2, 4 # stop rotation down
+                @bsk.body.rotateLeft @pm.vtta
+
+            else if @gm.math.fuzzyEqual @bsk.body.angle, 0, 4 # rotate back up
+                @bsk.body.rotateLeft 0
+                @bsk.body.pm.down = false
+                @bsk.body.angle = 0
+                console.log @_fle_, ': ', @bsk.body.angle
+
 
         else if @bsk.body.pm.branch is 'E' and @bsk.y > @Pm.bsks.y3
             @bsk.body.setZeroVelocity()
@@ -70,7 +88,6 @@ class Phacker.Game.OneBasket
             @bsk.body.pm.branch = 'W'
 
         else if @bsk.body.pm.branch is 'W' and @bsk.y < @Pm.bsks.y1
-            console.log @_fle_,': ', @bsk.y , @Pm.bsks.y1
             @bsk.body.setZeroVelocity()
             @bsk.body.moveRight  @pm.v
             @bsk.body.pm.branch = 'N'

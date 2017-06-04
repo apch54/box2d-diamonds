@@ -15,13 +15,12 @@ class Phacker.Game.Baskets
 
         @bska = []                                   # Array of baskets object
 
-        #@mk_bsk()
-
     #.----------.----------
     # create a basket
     #.----------.----------
     mk_bsk: ->
         @bska.push bkO = new Phacker.Game.OneBasket @gm, {x: @pm.x2, y:@pm.y2, branch:'E' }
+
     #.----------.----------
     # move all baskets
     #.----------.----------

@@ -82,8 +82,6 @@ class Phacker.Game.Gate
             @gtl.body.rotateRight 0
             @gtr.body.rotateRight 0
 
-        #console.log @_fle_,': ',@gtl.body.angle,@gtr.angle
-
     #.----------.----------
     # bind
     #.----------.----------
