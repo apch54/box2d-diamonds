@@ -76,7 +76,6 @@ class Phacker.Game.OneBasket
                 @bsk.body.angle = 0
                 console.log @_fle_, ': ', @bsk.body.angle
 
-
         else if @bsk.body.pm.branch is 'E' and @bsk.y > @Pm.bsks.y3
             @bsk.body.setZeroVelocity()
             @bsk.body.moveLeft  @pm.v

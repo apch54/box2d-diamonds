@@ -129,43 +129,39 @@
 }).call(this);
 
 
-/*  written by apch on 2017-05-06
-       ... --- ...
-      |          ,---------------------------------.
-      |.===.     | an other one : Diamonds mines   |
-      {}o o{}    _)--------------------------------'
-   ooO--(_)--Ooo-
- */
+/*  written by apch  on 2017-05-31 */
 
 (function() {
-  Phacker.Game.Bottom = (function() {
-    function Bottom(gm) {
+  Phacker.Game.Buttom = (function() {
+    function Buttom(gm) {
       this.gm = gm;
-      this._fle_ = 'Bottom';
-      this.Pm = this.gm.parameters;
-      this.pm = this.Pm.btm = {
-        x0: this.Pm.bg.w2,
-        w: 375,
-        h: 27
+      this._fle_ = 'Button';
+      this.pm = this.gm.parameters.btn = {
+        x: this.gm.parameters.mec.x0 - 35,
+        y: this.gm.parameters.mec.y0 + 180,
+        w: 72,
+        h: 72,
+        game_started: false
       };
-      this.pm.y0 = this.Pm.bg.h - this.pm.h;
-      this.pm.w2 = this.pm.w / 2;
-      this.pm.h2 = this.pm.h / 2;
-      this.vertices = [-this.pm.w2, 0, 0, -this.pm.h2, this.pm.w2, 0];
-      this.btm = this.draw_btm();
+      this.draw_button();
     }
 
-    Bottom.prototype.draw_btm = function() {
-      var btm;
-      btm = this.gm.add.sprite(this.pm.x0, this.pm.y0, 'platform');
-      this.gm.physics.box2d.enable(btm);
-      btm.body["static"] = true;
-      btm.body.fixedRotation = true;
-      btm.body.setChain(this.vertices);
-      return btm;
+    Buttom.prototype.draw_button = function() {
+      return this.btn = this.gm.add.button(this.pm.x, this.pm.y, 'start_btn', this.on_tap, this, 1, 1, 0);
     };
 
-    return Bottom;
+    Buttom.prototype.on_tap = function() {
+      this.bsksO.mk_bsk();
+      this.btn.y = 800;
+      this.btn.alpha = 0;
+      return this.pm.game_started = true;
+    };
+
+    Buttom.prototype.bind = function(bsks) {
+      return this.bsksO = bsks;
+    };
+
+    return Buttom;
 
   })();
 
@@ -222,39 +218,43 @@
 }).call(this);
 
 
-/*  written by apch  on 2017-05-31 */
+/*  written by apch on 2017-05-06
+       ... --- ...
+      |          ,---------------------------------.
+      |.===.     | an other one : Diamonds mines   |
+      {}o o{}    _)--------------------------------'
+   ooO--(_)--Ooo-
+ */
 
 (function() {
-  Phacker.Game.Buttom = (function() {
-    function Buttom(gm) {
+  Phacker.Game.Bottom = (function() {
+    function Bottom(gm) {
       this.gm = gm;
-      this._fle_ = 'Button';
-      this.pm = this.gm.parameters.btn = {
-        x: this.gm.parameters.mec.x0 - 35,
-        y: this.gm.parameters.mec.y0 + 180,
-        w: 72,
-        h: 72,
-        game_started: false
+      this._fle_ = 'Bottom';
+      this.Pm = this.gm.parameters;
+      this.pm = this.Pm.btm = {
+        x0: this.Pm.bg.w2,
+        w: 375,
+        h: 27
       };
-      this.draw_button();
+      this.pm.y0 = this.Pm.bg.h - this.pm.h;
+      this.pm.w2 = this.pm.w / 2;
+      this.pm.h2 = this.pm.h / 2;
+      this.vertices = [-this.pm.w2, 0, 0, -this.pm.h2, this.pm.w2, 0];
+      this.btm = this.draw_btm();
     }
 
-    Buttom.prototype.draw_button = function() {
-      return this.btn = this.gm.add.button(this.pm.x, this.pm.y, 'start_btn', this.on_tap, this, 1, 1, 0);
+    Bottom.prototype.draw_btm = function() {
+      var btm;
+      btm = this.gm.add.sprite(this.pm.x0, this.pm.y0, 'platform');
+      this.gm.physics.box2d.enable(btm);
+      btm.body["static"] = true;
+      btm.body.fixedRotation = true;
+      btm.body.setChain(this.vertices);
+      return btm;
     };
 
-    Buttom.prototype.on_tap = function() {
-      this.bsksO.mk_bsk();
-      this.btn.y = 800;
-      this.btn.alpha = 0;
-      return this.pm.game_started = true;
-    };
-
-    Buttom.prototype.bind = function(bsks) {
-      return this.bsksO = bsks;
-    };
-
-    return Buttom;
+    return Bottom;
 
   })();
 
@@ -337,110 +337,6 @@
     };
 
     return Gate;
-
-  })();
-
-}).call(this);
-
-(function() {
-  Phacker.Game.Diamonds = (function() {
-    function Diamonds(gm, btmO) {
-      this.gm = gm;
-      this.btmO = btmO;
-      this._fle_ = 'Diamonds';
-      this.Pm = this.gm.parameters;
-      this.pm = this.Pm.dmds = {
-        w: 10,
-        h: 10,
-        n_in: 0,
-        max_in: 15,
-        last_used: -1,
-        n: 97,
-        dmd_in_game: 15,
-        names: ['blue_ball', 'green_ball', 'pink_ball', 'red_ball', 'yellow_ball'],
-        x1: this.Pm.mec.x0 - this.Pm.mec.w / 2 + 9,
-        x2: this.Pm.mec.x0 - 18,
-        x3: this.Pm.mec.x0 + this.Pm.mec.w / 2 - 49,
-        y1: this.Pm.mec.y0 + 68,
-        msg_n: 'ok'
-      };
-      this.dmds = [];
-      this.mk_all_dmd();
-    }
-
-    Diamonds.prototype.check = function() {
-      if (!this.Pm.btn.game_started) {
-        return;
-      }
-      if (this.pm.n_in < this.pm.max_in && this.pm.last_used < this.pm.n) {
-        this.pm.last_used++;
-        this.dmds[this.pm.last_used].body["static"] = false;
-        return this.pm.n_in++;
-      }
-    };
-
-    Diamonds.prototype.mk_all_dmd = function() {
-      var col, col1, col2, col3, dmd, i, j, ref, results, x, y;
-      col1 = this.gm.rnd.integerInRange(0, 4);
-      col2 = (col1 + 1) % 5;
-      col3 = (col1 + 2) % 5;
-      results = [];
-      for (i = j = 0, ref = this.pm.n; 0 <= ref ? j <= ref : j >= ref; i = 0 <= ref ? ++j : --j) {
-        if (i < 28) {
-          col = col1;
-          if ((i % 4) === 0) {
-            x = this.pm.x2;
-            y = this.pm.y1 - Math.floor(i / 4) * 10;
-          } else {
-            x += 10;
-          }
-        } else if (i < 63) {
-          col = col2;
-          if ((i - 28) % 5 === 0) {
-            x = this.pm.x1;
-            y = this.pm.y1 - Math.floor((i - 28) / 5) * 10;
-          } else {
-            x += 10;
-          }
-        } else if (i < 98) {
-          col = col3;
-          if ((i - 63) % 5 === 0) {
-            x = this.pm.x3;
-            y = this.pm.y1 - Math.floor((i - 63) / 5) * 10;
-          } else {
-            x += 10;
-          }
-        }
-        dmd = this.mk_dmd(x, y, this.pm.names[col]);
-        results.push(this.dmds.push(dmd));
-      }
-      return results;
-    };
-
-    Diamonds.prototype.mk_dmd = function(x, y, frame) {
-      var spt;
-      spt = this.gm.add.sprite(x, y, frame);
-      this.gm.physics.box2d.enable(spt);
-      spt.body.setCircle(spt.width / 2);
-      spt.body.friction = 0.01;
-      spt.body["static"] = true;
-      spt.body.pm = {};
-      spt.body.pm.n = this.dmds.length;
-      spt.body.pm.dead = false;
-      spt.body.friction = 0.01;
-      spt.body.setBodyContactCallback(this.btmO.btm, this.btmCallback, this);
-      return spt;
-    };
-
-    Diamonds.prototype.btmCallback = function(dmdb, btmb, fixture1, fixture2, begin) {
-      if (dmdb.pm.dead) {
-        return;
-      }
-      dmdb.pm.dead = true;
-      return this.pm.n_in--;
-    };
-
-    return Diamonds;
 
   })();
 
@@ -591,6 +487,110 @@
 }).call(this);
 
 (function() {
+  Phacker.Game.Diamonds = (function() {
+    function Diamonds(gm, btmO) {
+      this.gm = gm;
+      this.btmO = btmO;
+      this._fle_ = 'Diamonds';
+      this.Pm = this.gm.parameters;
+      this.pm = this.Pm.dmds = {
+        w: 10,
+        h: 10,
+        n_in: 0,
+        max_in: 15,
+        last_used: -1,
+        n: 97,
+        dmd_in_game: 15,
+        names: ['blue_ball', 'green_ball', 'pink_ball', 'red_ball', 'yellow_ball'],
+        x1: this.Pm.mec.x0 - this.Pm.mec.w / 2 + 9,
+        x2: this.Pm.mec.x0 - 18,
+        x3: this.Pm.mec.x0 + this.Pm.mec.w / 2 - 49,
+        y1: this.Pm.mec.y0 + 68,
+        msg_n: 'ok'
+      };
+      this.dmds = [];
+      this.mk_all_dmd();
+    }
+
+    Diamonds.prototype.check = function() {
+      if (!this.Pm.btn.game_started) {
+        return;
+      }
+      if (this.pm.n_in < this.pm.max_in && this.pm.last_used < this.pm.n) {
+        this.pm.last_used++;
+        this.dmds[this.pm.last_used].body["static"] = false;
+        return this.pm.n_in++;
+      }
+    };
+
+    Diamonds.prototype.mk_all_dmd = function() {
+      var col, col1, col2, col3, dmd, i, j, ref, results, x, y;
+      col1 = this.gm.rnd.integerInRange(0, 4);
+      col2 = (col1 + 1) % 5;
+      col3 = (col1 + 2) % 5;
+      results = [];
+      for (i = j = 0, ref = this.pm.n; 0 <= ref ? j <= ref : j >= ref; i = 0 <= ref ? ++j : --j) {
+        if (i < 28) {
+          col = col1;
+          if ((i % 4) === 0) {
+            x = this.pm.x2;
+            y = this.pm.y1 - Math.floor(i / 4) * 10;
+          } else {
+            x += 10;
+          }
+        } else if (i < 63) {
+          col = col2;
+          if ((i - 28) % 5 === 0) {
+            x = this.pm.x1;
+            y = this.pm.y1 - Math.floor((i - 28) / 5) * 10;
+          } else {
+            x += 10;
+          }
+        } else if (i < 98) {
+          col = col3;
+          if ((i - 63) % 5 === 0) {
+            x = this.pm.x3;
+            y = this.pm.y1 - Math.floor((i - 63) / 5) * 10;
+          } else {
+            x += 10;
+          }
+        }
+        dmd = this.mk_dmd(x, y, this.pm.names[col]);
+        results.push(this.dmds.push(dmd));
+      }
+      return results;
+    };
+
+    Diamonds.prototype.mk_dmd = function(x, y, frame) {
+      var spt;
+      spt = this.gm.add.sprite(x, y, frame);
+      this.gm.physics.box2d.enable(spt);
+      spt.body.setCircle(spt.width / 2);
+      spt.body.friction = 0.01;
+      spt.body["static"] = true;
+      spt.body.pm = {};
+      spt.body.pm.n = this.dmds.length;
+      spt.body.pm.dead = false;
+      spt.body.friction = 0.01;
+      spt.body.setBodyContactCallback(this.btmO.btm, this.btmCallback, this);
+      return spt;
+    };
+
+    Diamonds.prototype.btmCallback = function(dmdb, btmb, fixture1, fixture2, begin) {
+      if (dmdb.pm.dead) {
+        return;
+      }
+      dmdb.pm.dead = true;
+      return this.pm.n_in--;
+    };
+
+    return Diamonds;
+
+  })();
+
+}).call(this);
+
+(function() {
   var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
 
@@ -626,7 +626,7 @@
       this.buttonO = new Phacker.Game.Buttom(this.game);
       this.gateO = new Phacker.Game.Gate(this.game, this.mecanicO);
       this.basketsO = new Phacker.Game.Baskets(this.game);
-      this.diamondsO = new Phacker.Game.Diamonds(this.game, this.bottomO);
+      this.diamondsO = new Phacker.Game.Diamonds(this.game, this.bottomO, this.basketsO);
       return this.buttonO.bind(this.basketsO);
     };
 
