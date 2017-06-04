@@ -5,13 +5,13 @@ define('PRODUCT', 'diamonds-mines');
 
 $gameOptions = array(
 	'duration' => 60,
-	'pointEarned' => 10,
-    'pointLost' => 15,
+	'pointEarned' => 2,
+    'pointLost' => 1,
 	'pointToLevel1' => 200,
     'winningLevel' =>1,
     'timingTemps'=> false,
     'percentToNextLevel' => 1.5,
-    'life' => 2,
+    'life' => 1,
     'pointBonus' => 5,
 
     //Here You can add new specific parameters

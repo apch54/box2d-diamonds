@@ -28,7 +28,7 @@ class Phacker.Game.Baskets
     # collision callback with dimonds body (dmdb)
     #.----------.----------
     bskCallback: (bskb, dmdb, fixture1, fixture2, begin)->
-        if dmdb.in_bsk then return
+        if dmdb.in_bsk then return # already had scored
         dmdb.in_bsk = true
         bskb.pm.full.push dmdb
         console.log @_fle_,': ',bskb.pm
@@ -43,9 +43,9 @@ class Phacker.Game.Baskets
             b = @bska[l-1].bsk
             li = 2*(@Pm.rope.w + @Pm.rope.h)/@pm.n    # space tween 2 baskets
 
-            if @gm.math.fuzzyEqual(b.y - @pm.y2 ,li, 4)  # an other basket
+            if @gm.math.fuzzyEqual(b.y - @pm.y2 ,li, 4)  # create an other basket
                 @mk_bsk() # create a basket
-        #console.log @_fle_,': ',@bska
+
         for b in @bska
             b.move()
 

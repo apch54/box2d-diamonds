@@ -469,36 +469,43 @@
     };
 
     OneBasket.prototype.move = function() {
-      if (this.bsk.body.pm.branch === 'N') {
+      var bskb, dmdb, i, len, ref;
+      bskb = this.bsk.body;
+      if (bskb.pm.branch === 'N') {
         if (this.bsk.x > this.Pm.bsks.x2) {
-          this.bsk.body.setZeroVelocity();
-          this.bsk.body.moveDown(this.pm.v);
-          return this.bsk.body.pm.branch = 'E';
+          bskb.setZeroVelocity();
+          bskb.moveDown(this.pm.v);
+          return bskb.pm.branch = 'E';
         } else if (this.gm.math.fuzzyEqual(this.bsk.x, this.pm.xrot1, 4)) {
-          return this.bsk.body.rotateRight(this.pm.vtta);
-        } else if (!this.bsk.body.pm.down && this.gm.math.fuzzyEqual(this.bsk.body.angle, 165, 4)) {
-          this.bsk.body.pm.down = true;
-          return this.bsk.body.rotateRight(0);
+          return bskb.rotateRight(this.pm.vtta);
+        } else if (!bskb.pm.down && this.gm.math.fuzzyEqual(bskb.angle, 165, 4)) {
+          bskb.pm.down = true;
+          return bskb.rotateRight(0);
         } else if (this.gm.math.fuzzyEqual(this.bsk.x, this.pm.xrot2, 4)) {
-          return this.bsk.body.rotateLeft(this.pm.vtta);
-        } else if (this.gm.math.fuzzyEqual(this.bsk.body.angle, 0, 4)) {
-          this.bsk.body.rotateLeft(0);
-          this.bsk.body.pm.down = false;
-          this.bsk.body.angle = 0;
-          return console.log(this._fle_, ': ', this.bsk.body.angle);
+          bskb.rotateLeft(this.pm.vtta);
+          ref = bskb.pm.full;
+          for (i = 0, len = ref.length; i < len; i++) {
+            dmdb = ref[i];
+            dmdb.in_bsk = false;
+          }
+          return bskb.pm.full = [];
+        } else if (this.gm.math.fuzzyEqual(bskb.angle, 0, 4)) {
+          bskb.rotateLeft(0);
+          bskb.pm.down = false;
+          return bskb.angle = 0;
         }
-      } else if (this.bsk.body.pm.branch === 'E' && this.bsk.y > this.Pm.bsks.y3) {
-        this.bsk.body.setZeroVelocity();
-        this.bsk.body.moveLeft(this.pm.v);
-        return this.bsk.body.pm.branch = 'S';
-      } else if (this.bsk.body.pm.branch === 'S' && this.bsk.x < this.Pm.bsks.x4) {
-        this.bsk.body.setZeroVelocity();
-        this.bsk.body.moveUp(this.pm.v);
-        return this.bsk.body.pm.branch = 'W';
-      } else if (this.bsk.body.pm.branch === 'W' && this.bsk.y < this.Pm.bsks.y1) {
-        this.bsk.body.setZeroVelocity();
-        this.bsk.body.moveRight(this.pm.v);
-        return this.bsk.body.pm.branch = 'N';
+      } else if (bskb.pm.branch === 'E' && this.bsk.y > this.Pm.bsks.y3) {
+        bskb.setZeroVelocity();
+        bskb.moveLeft(this.pm.v);
+        return bskb.pm.branch = 'S';
+      } else if (bskb.pm.branch === 'S' && this.bsk.x < this.Pm.bsks.x4) {
+        bskb.setZeroVelocity();
+        bskb.moveUp(this.pm.v);
+        return bskb.pm.branch = 'W';
+      } else if (bskb.pm.branch === 'W' && this.bsk.y < this.Pm.bsks.y1) {
+        bskb.setZeroVelocity();
+        bskb.moveRight(this.pm.v);
+        return bskb.pm.branch = 'N';
       }
     };
 

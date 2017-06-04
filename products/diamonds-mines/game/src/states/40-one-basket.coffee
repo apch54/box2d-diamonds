@@ -55,40 +55,43 @@ class Phacker.Game.OneBasket
     # move one basket
     #.----------.----------
     move : () ->
-        if @bsk.body.pm.branch is 'N'
+        bskb = @bsk.body
+        if bskb.pm.branch is 'N'
             if @bsk.x > @Pm.bsks.x2   # normal rot to south a the end of branch
-                @bsk.body.setZeroVelocity()
-                @bsk.body.moveDown @pm.v
-                @bsk.body.pm.branch = 'E'
+                bskb.setZeroVelocity()
+                bskb.moveDown @pm.v
+                bskb.pm.branch = 'E'
 
             else if @gm.math.fuzzyEqual @bsk.x, @pm.xrot1, 4 # rotate down basket
-                @bsk.body.rotateRight @pm.vtta
+                bskb.rotateRight @pm.vtta
 
-            else if not @bsk.body.pm.down  and @gm.math.fuzzyEqual @bsk.body.angle, 165, 4 # stop rotation down
-                @bsk.body.pm.down = true
-                @bsk.body.rotateRight 0
+            else if not bskb.pm.down  and @gm.math.fuzzyEqual bskb.angle, 165, 4 # stop rotation down
+                bskb.pm.down = true
+                bskb.rotateRight 0
 
             else if @gm.math.fuzzyEqual @bsk.x, @pm.xrot2, 4 # stop rotation down
-                @bsk.body.rotateLeft @pm.vtta
+                bskb.rotateLeft @pm.vtta
+                # free baskets of diamonds
+                for dmdb in bskb.pm.full then dmdb.in_bsk = false #diamond can replay
+                bskb.pm.full = [] # empty basket array full
 
-            else if @gm.math.fuzzyEqual @bsk.body.angle, 0, 4 # rotate back up
-                @bsk.body.rotateLeft 0
-                @bsk.body.pm.down = false
-                @bsk.body.angle = 0
-                console.log @_fle_, ': ', @bsk.body.angle
+            else if @gm.math.fuzzyEqual bskb.angle, 0, 4 # rotate back up
+                bskb.rotateLeft 0
+                bskb.pm.down = false
+                bskb.angle = 0
 
-        else if @bsk.body.pm.branch is 'E' and @bsk.y > @Pm.bsks.y3
-            @bsk.body.setZeroVelocity()
-            @bsk.body.moveLeft  @pm.v
-            @bsk.body.pm.branch = 'S'
+        else if bskb.pm.branch is 'E' and @bsk.y > @Pm.bsks.y3
+            bskb.setZeroVelocity()
+            bskb.moveLeft  @pm.v
+            bskb.pm.branch = 'S'
 
-        else if @bsk.body.pm.branch is 'S' and @bsk.x < @Pm.bsks.x4
-            @bsk.body.setZeroVelocity()
-            @bsk.body.moveUp  @pm.v
-            @bsk.body.pm.branch = 'W'
+        else if bskb.pm.branch is 'S' and @bsk.x < @Pm.bsks.x4
+            bskb.setZeroVelocity()
+            bskb.moveUp  @pm.v
+            bskb.pm.branch = 'W'
 
-        else if @bsk.body.pm.branch is 'W' and @bsk.y < @Pm.bsks.y1
-            @bsk.body.setZeroVelocity()
-            @bsk.body.moveRight  @pm.v
-            @bsk.body.pm.branch = 'N'
+        else if bskb.pm.branch is 'W' and @bsk.y < @Pm.bsks.y1
+            bskb.setZeroVelocity()
+            bskb.moveRight  @pm.v
+            bskb.pm.branch = 'N'
 
