@@ -39,6 +39,7 @@ class Phacker.Game.OneBasket
         @bsk.body.pm.branch = lstP.branch
         @bsk.body.pm.color = col
         @bsk.body.pm.down =  false
+        @bsk.body.pm.full =  []
 
         #@bsk.body.setBodyContactCallback(@btmO.btm, @btmCallback, @);
 

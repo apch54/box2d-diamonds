@@ -13,13 +13,25 @@ class Phacker.Game.Baskets
             v:@gm.gameOptions.vx0 #baskets velocity
         #@pm.bsk_remaining = @pm.n
 
-        @bska = []                                   # Array of baskets object
+        @bska = []  # Array of basket objects
 
     #.----------.----------
     # create a basket
     #.----------.----------
     mk_bsk: ->
         @bska.push bkO = new Phacker.Game.OneBasket @gm, {x: @pm.x2, y:@pm.y2, branch:'E' }
+
+        for d in @dmds #collision  with dimonds body (dmdb)
+            bkO.bsk.body.setBodyContactCallback(d, @bskCallback, @)  # contact with botom
+
+    #.----------.----------
+    # collision callback with dimonds body (dmdb)
+    #.----------.----------
+    bskCallback: (bskb, dmdb, fixture1, fixture2, begin)->
+        if dmdb.in_bsk then return
+        dmdb.in_bsk = true
+        bskb.pm.full.push dmdb
+        console.log @_fle_,': ',bskb.pm
 
     #.----------.----------
     # move all baskets
@@ -36,3 +48,11 @@ class Phacker.Game.Baskets
         #console.log @_fle_,': ',@bska
         for b in @bska
             b.move()
+
+    #.----------.----------
+    # move all baskets
+    #.----------.----------
+    bind: (dmdO) ->
+        @dmdO = dmdO
+        @dmds = @dmdO.dmds
+        #console.log @_fle_,': ', @dmds[0]

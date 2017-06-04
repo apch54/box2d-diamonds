@@ -364,12 +364,28 @@
     }
 
     Baskets.prototype.mk_bsk = function() {
-      var bkO;
-      return this.bska.push(bkO = new Phacker.Game.OneBasket(this.gm, {
+      var bkO, d, i, len, ref, results;
+      this.bska.push(bkO = new Phacker.Game.OneBasket(this.gm, {
         x: this.pm.x2,
         y: this.pm.y2,
         branch: 'E'
       }));
+      ref = this.dmds;
+      results = [];
+      for (i = 0, len = ref.length; i < len; i++) {
+        d = ref[i];
+        results.push(bkO.bsk.body.setBodyContactCallback(d, this.bskCallback, this));
+      }
+      return results;
+    };
+
+    Baskets.prototype.bskCallback = function(bskb, dmdb, fixture1, fixture2, begin) {
+      if (dmdb.in_bsk) {
+        return;
+      }
+      dmdb.in_bsk = true;
+      bskb.pm.full.push(dmdb);
+      return console.log(this._fle_, ': ', bskb.pm);
     };
 
     Baskets.prototype.move = function() {
@@ -388,6 +404,11 @@
         results.push(b.move());
       }
       return results;
+    };
+
+    Baskets.prototype.bind = function(dmdO) {
+      this.dmdO = dmdO;
+      return this.dmds = this.dmdO.dmds;
     };
 
     return Baskets;
@@ -431,6 +452,7 @@
       this.bsk.body.pm.branch = lstP.branch;
       this.bsk.body.pm.color = col;
       this.bsk.body.pm.down = false;
+      this.bsk.body.pm.full = [];
       if (this.bsk.body.pm.branch === 'E') {
         this.bsk.body.setZeroVelocity();
         return this.bsk.body.moveDown(this.pm.v);
@@ -571,6 +593,7 @@
       spt.body.pm = {};
       spt.body.pm.n = this.dmds.length;
       spt.body.pm.dead = false;
+      spt.in_bsk = false;
       spt.body.friction = 0.01;
       spt.body.setBodyContactCallback(this.btmO.btm, this.btmCallback, this);
       return spt;
@@ -626,8 +649,9 @@
       this.buttonO = new Phacker.Game.Buttom(this.game);
       this.gateO = new Phacker.Game.Gate(this.game, this.mecanicO);
       this.basketsO = new Phacker.Game.Baskets(this.game);
-      this.diamondsO = new Phacker.Game.Diamonds(this.game, this.bottomO, this.basketsO);
-      return this.buttonO.bind(this.basketsO);
+      this.diamondsO = new Phacker.Game.Diamonds(this.game, this.bottomO);
+      this.buttonO.bind(this.basketsO);
+      return this.basketsO.bind(this.diamondsO);
     };
 
     return YourGame;
