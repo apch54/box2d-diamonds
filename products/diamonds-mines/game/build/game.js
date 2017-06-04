@@ -384,8 +384,7 @@
         return;
       }
       dmdb.in_bsk = true;
-      bskb.pm.full.push(dmdb);
-      return console.log(this._fle_, ': ', bskb.pm);
+      return bskb.pm.full.push(dmdb);
     };
 
     Baskets.prototype.move = function() {
@@ -475,12 +474,12 @@
         if (this.bsk.x > this.Pm.bsks.x2) {
           bskb.setZeroVelocity();
           bskb.moveDown(this.pm.v);
-          return bskb.pm.branch = 'E';
+          bskb.pm.branch = 'E';
         } else if (this.gm.math.fuzzyEqual(this.bsk.x, this.pm.xrot1, 4)) {
-          return bskb.rotateRight(this.pm.vtta);
+          bskb.rotateRight(this.pm.vtta);
         } else if (!bskb.pm.down && this.gm.math.fuzzyEqual(bskb.angle, 165, 4)) {
           bskb.pm.down = true;
-          return bskb.rotateRight(0);
+          bskb.rotateRight(0);
         } else if (this.gm.math.fuzzyEqual(this.bsk.x, this.pm.xrot2, 4)) {
           bskb.rotateLeft(this.pm.vtta);
           ref = bskb.pm.full;
@@ -488,24 +487,36 @@
             dmdb = ref[i];
             dmdb.in_bsk = false;
           }
-          return bskb.pm.full = [];
+          bskb.pm.full = [];
         } else if (this.gm.math.fuzzyEqual(bskb.angle, 0, 4)) {
           bskb.rotateLeft(0);
           bskb.pm.down = false;
-          return bskb.angle = 0;
+          bskb.angle = 0;
         }
       } else if (bskb.pm.branch === 'E' && this.bsk.y > this.Pm.bsks.y3) {
         bskb.setZeroVelocity();
         bskb.moveLeft(this.pm.v);
-        return bskb.pm.branch = 'S';
+        bskb.pm.branch = 'S';
       } else if (bskb.pm.branch === 'S' && this.bsk.x < this.Pm.bsks.x4) {
         bskb.setZeroVelocity();
         bskb.moveUp(this.pm.v);
-        return bskb.pm.branch = 'W';
-      } else if (bskb.pm.branch === 'W' && this.bsk.y < this.Pm.bsks.y1) {
-        bskb.setZeroVelocity();
-        bskb.moveRight(this.pm.v);
-        return bskb.pm.branch = 'N';
+        bskb.pm.branch = 'W';
+      } else if (bskb.pm.branch === 'W') {
+        if (bskb.pm.full.length === 0) {
+          bskb.setZeroVelocity();
+          bskb.moveLeft(this.pm.v);
+          bskb.moveDown(this.pm.v);
+          this.bsk.body.pm.branch = 'X';
+        } else if (this.bsk.y < this.Pm.bsks.y1) {
+          bskb.setZeroVelocity();
+          bskb.moveRight(this.pm.v);
+          bskb.pm.branch = 'N';
+        }
+      }
+      if (this.bsk.body.pm.branch === 'X' && this.bsk.y > this.Pm.bsks.y3 + 30) {
+        this.bsk.body.setZeroVelocity();
+        this.bsk.body.x = 100;
+        return this.bsk.body.y = -100;
       }
     };
 

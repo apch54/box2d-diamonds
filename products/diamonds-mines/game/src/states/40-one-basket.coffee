@@ -90,8 +90,31 @@ class Phacker.Game.OneBasket
             bskb.moveUp  @pm.v
             bskb.pm.branch = 'W'
 
-        else if bskb.pm.branch is 'W' and @bsk.y < @Pm.bsks.y1
-            bskb.setZeroVelocity()
-            bskb.moveRight  @pm.v
-            bskb.pm.branch = 'N'
+        else if bskb.pm.branch is 'W'
+            if bskb.pm.full.length is 0
+                bskb.setZeroVelocity()
+                bskb.moveLeft  @pm.v
+                bskb.moveDown  @pm.v
+                @bsk.body.pm.branch = 'X'        # no branch
+                #@gm.time.events.add Phaser.Timer.SECOND * 1, @throw_bsk, @
+
+            else if @bsk.y < @Pm.bsks.y1
+                bskb.setZeroVelocity()
+                bskb.moveRight  @pm.v
+                bskb.pm.branch = 'N'
+
+        if  @bsk.body.pm.branch is 'X' and @bsk.y > @Pm.bsks.y3 + 30 # lost bsk
+            @bsk.body.setZeroVelocity()
+            @bsk.body.x = 100
+            @bsk.body.y = -100
+
+
+    #.----------.----------
+    #thow away empty basket
+    #.----------.----------
+#    throw_bsk: () ->
+#
+#        @bsk.body.setZeroVelocity()
+#        @bsk.body.pm.branch = 'X'        # no branch
+#        @bsk.y = -700
 

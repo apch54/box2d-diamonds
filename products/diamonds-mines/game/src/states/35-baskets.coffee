@@ -31,7 +31,7 @@ class Phacker.Game.Baskets
         if dmdb.in_bsk then return # already had scored
         dmdb.in_bsk = true
         bskb.pm.full.push dmdb
-        console.log @_fle_,': ',bskb.pm
+        #console.log @_fle_,': ',bskb.pm
 
     #.----------.----------
     # move all baskets
