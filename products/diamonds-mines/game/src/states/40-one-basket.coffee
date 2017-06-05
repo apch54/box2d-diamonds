@@ -1,5 +1,4 @@
 class Phacker.Game.OneBasket
-
     constructor: (@gm,@lstP) -> # lstP for list oparameters of the basket
         @_fle_ = 'One bsk'
         @Pm = @gm.parameters                        # globals parameters
@@ -13,8 +12,9 @@ class Phacker.Game.OneBasket
             names: ['blue_basket','green_basket','normal_basket','pink_basket','red_basket']
             xrot1: @Pm.rope.x0 - 120                # on north rope branch down rotation x
             xrot2: @Pm.rope.x0 + @Pm.rope.w/6       # back up rotation
-            yout:  @Pm.bsks.y3-75                  # for bascket in w branche and empty ; so return home
+            yout:  @Pm.bsks.y3-75                   # for bascket in w branche and empty ; so return home
             vtta : 250                              # basket rotation velocity
+
 
         @vertices= [ -@pm.w/2+6,-@pm.h/2,  -@pm.w/2+12,@pm.h/2-5,  @pm.w/2-12,@pm.h/2-5,  @pm.w/2-6,-@pm.h/2 ] # body basket
         @bsk = {}                                   #  one basket prototype
@@ -64,6 +64,12 @@ class Phacker.Game.OneBasket
     # move one basket
     #.----------.----------
     move : () ->
+        # Game over ?
+        console.log @_fle_,': ',@Pm.bsks.dead_bsk,@Pm.bsks.n,@Pm.bsks.game_over
+        if (@Pm.bsks.dead_bsk is @Pm.bsks.n) and not @Pm.bsks.game_over
+            @Pm.bsks.game_over = true
+            @Pm.msg.push 'no bsk' # no more diamonds
+
         bskb = @bsk.body
 
         #.----------.----------. North .----------.----------
@@ -117,6 +123,7 @@ class Phacker.Game.OneBasket
                     bskb.moveDown  @pm.v*2
                     bskb.rotateLeft @pm.vtta
                     @bsk.body.pm.branch = 'X'        # no branch
+                    @Pm.bsks.dead_bsk++
                     #@gm.time.events.add Phaser.Timer.SECOND * 1, @throw_bsk, @
 
             if @bsk.y < @Pm.bsks.y1

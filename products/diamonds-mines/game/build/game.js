@@ -373,7 +373,9 @@
         y4: this.gm.parameters.rope.y0 + this.Pm.rope.h - 2,
         n: 6,
         v: this.gm.gameOptions.vx0,
-        "in": 1
+        "in": 1,
+        dead_bsk: 0,
+        game_over: false
       };
       this.bska = [];
       this.mk_bsk();
@@ -515,6 +517,11 @@
 
     OneBasket.prototype.move = function() {
       var bskb, dmdb, i, len, ref;
+      console.log(this._fle_, ': ', this.Pm.bsks.dead_bsk, this.Pm.bsks.n, this.Pm.bsks.game_over);
+      if ((this.Pm.bsks.dead_bsk === this.Pm.bsks.n) && !this.Pm.bsks.game_over) {
+        this.Pm.bsks.game_over = true;
+        this.Pm.msg.push('no bsk');
+      }
       bskb = this.bsk.body;
       if (bskb.pm.branch === 'N') {
         if (this.bsk.x > this.Pm.bsks.x2) {
@@ -555,6 +562,7 @@
             bskb.moveDown(this.pm.v * 2);
             bskb.rotateLeft(this.pm.vtta);
             this.bsk.body.pm.branch = 'X';
+            this.Pm.bsks.dead_bsk++;
           }
         }
         if (this.bsk.y < this.Pm.bsks.y1) {
@@ -597,7 +605,8 @@
         x2: this.Pm.mec.x0 - 18,
         x3: this.Pm.mec.x0 + this.Pm.mec.w / 2 - 49,
         y1: this.Pm.mec.y0 + 68,
-        msg_n: 'ok'
+        msg_n: 'ok',
+        game_over: false
       };
       this.dmds = [];
       this.mk_all_dmd();
@@ -610,7 +619,11 @@
       if (this.pm.n_in < this.pm.max_in && this.pm.last_used < this.pm.n) {
         this.pm.last_used++;
         this.dmds[this.pm.last_used].body["static"] = false;
-        return this.pm.n_in++;
+        this.pm.n_in++;
+      }
+      if (this.pm.n_in < 2 && this.pm.last_used === this.pm.n && !this.pm.game_over) {
+        this.pm.game_over = true;
+        return this.Pm.msg.push('no dmd');
       }
     };
 
@@ -703,6 +716,10 @@
       }
       if ((msg = this.socleO.get_msg()) === 'win') {
         return this.win();
+      } else if (msg === 'no dmd') {
+        return this.lostLife();
+      } else if (msg === 'no bsk') {
+        return this.lostLife();
       }
     };
 

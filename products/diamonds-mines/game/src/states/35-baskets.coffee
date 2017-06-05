@@ -12,6 +12,9 @@ class Phacker.Game.Baskets
             n: 6
             v:@gm.gameOptions.vx0 #baskets velocity
             in:1
+            dead_bsk:0
+            game_over: false
+
 
         #@pm.bsk_remaining = @pm.n
         @bska = []  # Array of basket objects
@@ -19,12 +22,17 @@ class Phacker.Game.Baskets
         #@anim(0)
 
     #.----------.----------
-    # create a basket
+    # create one basket and then callback
     #.----------.----------
     mk_bsk: ->
 
         for ii in [0..@pm.n-1]
             @bska.push bkO = new Phacker.Game.OneBasket @gm, {x: @pm.x2, y:@pm.y2, branch:'E',i: ii }
+
+    #.----------.----------
+    # create one basket and then callback
+    # called by diamondsO when finshed in dreate phase
+    #.----------.----------
 
     create_callback:(dmds)->
         for d in dmds #collision  with dimonds body (dmdb)
@@ -42,7 +50,7 @@ class Phacker.Game.Baskets
         #console.log @_fle_,': ',bskb.pm
 
     #.----------.----------
-    # start moving the basket ## for green button
+    # start moving the basket ## for greenbutton mainly
     #.----------.----------
     anim: (n) ->
         #console.log @_fle_,': ',@bska[0]
