@@ -5,8 +5,10 @@ class @YourGame extends Phacker.GameState
         @gateO.check()
         @diamondsO.check()
         @basketsO.move() if @buttonO.pm.game_started
-#        @game.debug.box2dWorld()
-#        @game.debug.body @btm
+#
+        if (msg =  @socleO.get_msg()) is 'win' then @win()
+        #@game.debug.box2dWorld()
+        #@game.debug.body @btm
 
     resetPlayer: ->
         console.log "Reset the player"
@@ -16,7 +18,7 @@ class @YourGame extends Phacker.GameState
         @_fle_ = 'create'
         @game.physics.startSystem(Phaser.Physics.BOX2D)
         #@game.physics.box2d.debugDraw.joints = true
-        @game.physics.box2d.gravity.y = 1000
+        @game.physics.box2d.gravity.y = @game.gameOptions.gravityY
 
         @socleO     = new   Phacker.Game.Socle      @game
         @ropeO      = new   Phacker.Game.Rope       @game
@@ -26,9 +28,11 @@ class @YourGame extends Phacker.GameState
         @gateO      = new   Phacker.Game.Gate       @game, @mecanicO
         @basketsO   = new   Phacker.Game.Baskets    @game
         @diamondsO  = new   Phacker.Game.Diamonds   @game, @bottomO
-
+#
         @buttonO.bind @basketsO
         @basketsO.bind @diamondsO
+        @basketsO.create_callback @diamondsO.dmds
+#        @mecanicO.bind @diamondsO
 
         #@gateO.bind @mecanicO
 

@@ -4,6 +4,7 @@ class Phacker.Game.Socle
     constructor: (@gm) ->
         @_fle_ = 'Socle'
         @Pm = @gm.parameters = {}
+        @Pm.msg = [] # store all messages
 
         @pm = @Pm.bg = # background
             y0: 48
@@ -22,3 +23,16 @@ class Phacker.Game.Socle
 
         @bg = @gm.add.sprite @pm.x0, @pm.y0, 'bg_gameplay' # 768x500
         @bg.anchor.setTo(0.5, 0) # anchor in the middle of top
+
+    #.----------.----------
+    # get all messages
+    #.----------.----------
+
+    get_msg: ->
+        #console.log @_fle_,': ',@pm.msg_bsks.length
+        if  @Pm.msg.length is 0
+            return 'none'
+        else
+            return @Pm.msg.pop()
+
+

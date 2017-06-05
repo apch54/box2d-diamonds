@@ -24,7 +24,7 @@ class Phacker.Game.Buttom
     # on tap game gegins
     #.----------.----------
     on_tap: () ->
-        @bsksO.mk_bsk() # first creation of baskets
+        @bsksO.anim(0) # first creation of baskets
         @btn.y = 800   # very low down
         @btn.alpha = 0
 

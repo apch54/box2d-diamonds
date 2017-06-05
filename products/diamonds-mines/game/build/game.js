@@ -43,6 +43,7 @@
       this.gm = gm;
       this._fle_ = 'Socle';
       this.Pm = this.gm.parameters = {};
+      this.Pm.msg = [];
       this.pm = this.Pm.bg = {
         y0: 48,
         w: this.gm.gameOptions.fullscreen ? 375 : 768,
@@ -56,6 +57,14 @@
     Socle.prototype.draw_bg = function() {
       this.bg = this.gm.add.sprite(this.pm.x0, this.pm.y0, 'bg_gameplay');
       return this.bg.anchor.setTo(0.5, 0);
+    };
+
+    Socle.prototype.get_msg = function() {
+      if (this.Pm.msg.length === 0) {
+        return 'none';
+      } else {
+        return this.Pm.msg.pop();
+      }
     };
 
     return Socle;
@@ -151,7 +160,7 @@
     };
 
     Buttom.prototype.on_tap = function() {
-      this.bsksO.mk_bsk();
+      this.bsksO.anim(0);
       this.btn.y = 800;
       this.btn.alpha = 0;
       return this.pm.game_started = true;
@@ -171,7 +180,7 @@
   Phacker.Game.Mecanic = (function() {
     function Mecanic(gm) {
       this.gm = gm;
-      this._fle_ = 'Socle';
+      this._fle_ = 'Mecanic';
       this.Pm = this.gm.parameters;
       this.pm = this.Pm.mec = {
         x0: this.Pm.bg.w2,
@@ -209,6 +218,11 @@
       this.pm.right_vtx = [this.pm.x6, this.pm.y6 - 20, this.pm.x6, this.pm.y6, this.pm.x5, this.pm.y5, this.pm.x4, this.pm.y4];
       this.right_body = new Phaser.Physics.Box2D.Body(this.gm, null, 0, 0, 0);
       return this.right_body.setChain(this.pm.right_vtx);
+    };
+
+    Mecanic.prototype.bind = function(dmdO) {
+      this.dmdO = dmdO;
+      return this.dmds = this.dmdO.dmds;
     };
 
     return Mecanic;
@@ -358,42 +372,67 @@
         x4: this.Pm.rope.x0 - this.Pm.rope.w / 2 + 2,
         y4: this.gm.parameters.rope.y0 + this.Pm.rope.h - 2,
         n: 6,
-        v: this.gm.gameOptions.vx0
+        v: this.gm.gameOptions.vx0,
+        "in": 1
       };
       this.bska = [];
+      this.mk_bsk();
     }
 
     Baskets.prototype.mk_bsk = function() {
-      var bkO, d, i, len, ref, results;
-      this.bska.push(bkO = new Phacker.Game.OneBasket(this.gm, {
-        x: this.pm.x2,
-        y: this.pm.y2,
-        branch: 'E'
-      }));
-      ref = this.dmds;
+      var bkO, i, ii, ref, results;
       results = [];
-      for (i = 0, len = ref.length; i < len; i++) {
-        d = ref[i];
-        results.push(bkO.bsk.body.setBodyContactCallback(d, this.bskCallback, this));
+      for (ii = i = 0, ref = this.pm.n - 1; 0 <= ref ? i <= ref : i >= ref; ii = 0 <= ref ? ++i : --i) {
+        results.push(this.bska.push(bkO = new Phacker.Game.OneBasket(this.gm, {
+          x: this.pm.x2,
+          y: this.pm.y2,
+          branch: 'E',
+          i: ii
+        })));
+      }
+      return results;
+    };
+
+    Baskets.prototype.create_callback = function(dmds) {
+      var bkO, d, i, len, results;
+      results = [];
+      for (i = 0, len = dmds.length; i < len; i++) {
+        d = dmds[i];
+        results.push((function() {
+          var j, len1, ref, results1;
+          ref = this.bska;
+          results1 = [];
+          for (j = 0, len1 = ref.length; j < len1; j++) {
+            bkO = ref[j];
+            results1.push(bkO.bsk.body.setBodyContactCallback(d, this.bskCallback, this));
+          }
+          return results1;
+        }).call(this));
       }
       return results;
     };
 
     Baskets.prototype.bskCallback = function(bskb, dmdb, fixture1, fixture2, begin) {
-      if (dmdb.in_bsk) {
+      if (dmdb.pm.in_bsk) {
         return;
       }
-      dmdb.in_bsk = true;
-      return bskb.pm.full.push(dmdb);
+      dmdb.pm.in_bsk = true;
+      bskb.pm.full.push(dmdb);
+      return this.Pm.msg.push('win');
+    };
+
+    Baskets.prototype.anim = function(n) {
+      return this.bska[n].anim();
     };
 
     Baskets.prototype.move = function() {
-      var b, i, l, len, li, ref, results;
-      if ((l = this.bska.length) < this.pm.n) {
-        b = this.bska[l - 1].bsk;
+      var b, i, len, li, ref, results;
+      if (this.pm["in"] < this.pm.n) {
+        b = this.bska[this.pm["in"] - 1].bsk;
         li = 2 * (this.Pm.rope.w + this.Pm.rope.h) / this.pm.n;
         if (this.gm.math.fuzzyEqual(b.y - this.pm.y2, li, 4)) {
-          this.mk_bsk();
+          this.anim(this.pm["in"]);
+          this.pm["in"]++;
         }
       }
       ref = this.bska;
@@ -432,9 +471,10 @@
         names: ['blue_basket', 'green_basket', 'normal_basket', 'pink_basket', 'red_basket'],
         xrot1: this.Pm.rope.x0 - 120,
         xrot2: this.Pm.rope.x0 + this.Pm.rope.w / 6,
+        yout: this.Pm.bsks.y3 - 75,
         vtta: 250
       };
-      this.vertices = [-this.pm.w / 2 + 4, -this.pm.h / 2, -this.pm.w / 2 + 10, this.pm.h / 2 - 5, this.pm.w / 2 - 10, this.pm.h / 2 - 5, this.pm.w / 2 - 4, -this.pm.h / 2];
+      this.vertices = [-this.pm.w / 2 + 6, -this.pm.h / 2, -this.pm.w / 2 + 12, this.pm.h / 2 - 5, this.pm.w / 2 - 12, this.pm.h / 2 - 5, this.pm.w / 2 - 6, -this.pm.h / 2];
       this.bsk = {};
       this.mk_bsk(this.lstP);
     }
@@ -443,15 +483,21 @@
       var col;
       col = this.gm.rnd.integerInRange(0, 4);
       this.bsk = this.gm.add.sprite(lstP.x, lstP.y, this.pm.names[col]);
+      this.bsk.alpha = 0;
       this.gm.physics.box2d.enable(this.bsk);
       this.bsk.body.setChain(this.vertices);
       this.bsk.body.kinematic = true;
       this.bsk.body.friction = 0.01;
       this.bsk.body.pm = {};
       this.bsk.body.pm.branch = lstP.branch;
+      this.bsk.body.pm.i = lstP.i;
       this.bsk.body.pm.color = col;
       this.bsk.body.pm.down = false;
-      this.bsk.body.pm.full = [];
+      return this.bsk.body.pm.full = [];
+    };
+
+    OneBasket.prototype.anim = function(bsk) {
+      this.bsk.alpha = 1;
       if (this.bsk.body.pm.branch === 'E') {
         this.bsk.body.setZeroVelocity();
         return this.bsk.body.moveDown(this.pm.v);
@@ -485,7 +531,7 @@
           ref = bskb.pm.full;
           for (i = 0, len = ref.length; i < len; i++) {
             dmdb = ref[i];
-            dmdb.in_bsk = false;
+            dmdb.pm.in_bsk = false;
           }
           bskb.pm.full = [];
         } else if (this.gm.math.fuzzyEqual(bskb.angle, 0, 4)) {
@@ -502,21 +548,26 @@
         bskb.moveUp(this.pm.v);
         bskb.pm.branch = 'W';
       } else if (bskb.pm.branch === 'W') {
-        if (bskb.pm.full.length === 0) {
-          bskb.setZeroVelocity();
-          bskb.moveLeft(this.pm.v);
-          bskb.moveDown(this.pm.v);
-          this.bsk.body.pm.branch = 'X';
-        } else if (this.bsk.y < this.Pm.bsks.y1) {
+        if (this.gm.math.fuzzyEqual(this.bsk.y, this.pm.yout)) {
+          if (bskb.pm.full.length === 0) {
+            bskb.setZeroVelocity();
+            bskb.moveLeft(this.pm.v);
+            bskb.moveDown(this.pm.v * 2);
+            bskb.rotateLeft(this.pm.vtta);
+            this.bsk.body.pm.branch = 'X';
+          }
+        }
+        if (this.bsk.y < this.Pm.bsks.y1) {
           bskb.setZeroVelocity();
           bskb.moveRight(this.pm.v);
           bskb.pm.branch = 'N';
         }
       }
-      if (this.bsk.body.pm.branch === 'X' && this.bsk.y > this.Pm.bsks.y3 + 30) {
+      if (this.bsk.body.pm.branch === 'X' && this.bsk.y > this.Pm.bsks.y3 + 150) {
         this.bsk.body.setZeroVelocity();
         this.bsk.body.x = 100;
-        return this.bsk.body.y = -100;
+        this.bsk.body.y = -100;
+        return bskb.rotateRight(0);
       }
     };
 
@@ -537,10 +588,10 @@
         w: 10,
         h: 10,
         n_in: 0,
-        max_in: 15,
+        max_in: 30,
         last_used: -1,
         n: 97,
-        dmd_in_game: 15,
+        dmd_in_game: 0,
         names: ['blue_ball', 'green_ball', 'pink_ball', 'red_ball', 'yellow_ball'],
         x1: this.Pm.mec.x0 - this.Pm.mec.w / 2 + 9,
         x2: this.Pm.mec.x0 - 18,
@@ -606,13 +657,13 @@
       spt = this.gm.add.sprite(x, y, frame);
       this.gm.physics.box2d.enable(spt);
       spt.body.setCircle(spt.width / 2);
-      spt.body.friction = 0.01;
+      spt.body.friction = 0.05;
+      spt.body.restitution = .2;
       spt.body["static"] = true;
       spt.body.pm = {};
       spt.body.pm.n = this.dmds.length;
       spt.body.pm.dead = false;
-      spt.in_bsk = false;
-      spt.body.friction = 0.01;
+      spt.body.pm.in_bsk = false;
       spt.body.setBodyContactCallback(this.btmO.btm, this.btmCallback, this);
       return spt;
     };
@@ -643,11 +694,15 @@
     }
 
     YourGame.prototype.update = function() {
+      var msg;
       YourGame.__super__.update.call(this);
       this.gateO.check();
       this.diamondsO.check();
       if (this.buttonO.pm.game_started) {
-        return this.basketsO.move();
+        this.basketsO.move();
+      }
+      if ((msg = this.socleO.get_msg()) === 'win') {
+        return this.win();
       }
     };
 
@@ -659,7 +714,7 @@
       YourGame.__super__.create.call(this);
       this._fle_ = 'create';
       this.game.physics.startSystem(Phaser.Physics.BOX2D);
-      this.game.physics.box2d.gravity.y = 1000;
+      this.game.physics.box2d.gravity.y = this.game.gameOptions.gravityY;
       this.socleO = new Phacker.Game.Socle(this.game);
       this.ropeO = new Phacker.Game.Rope(this.game);
       this.bottomO = new Phacker.Game.Bottom(this.game);
@@ -669,7 +724,8 @@
       this.basketsO = new Phacker.Game.Baskets(this.game);
       this.diamondsO = new Phacker.Game.Diamonds(this.game, this.bottomO);
       this.buttonO.bind(this.basketsO);
-      return this.basketsO.bind(this.diamondsO);
+      this.basketsO.bind(this.diamondsO);
+      return this.basketsO.create_callback(this.diamondsO.dmds);
     };
 
     return YourGame;

@@ -13,9 +13,10 @@ class Phacker.Game.OneBasket
             names: ['blue_basket','green_basket','normal_basket','pink_basket','red_basket']
             xrot1: @Pm.rope.x0 - 120                # on north rope branch down rotation x
             xrot2: @Pm.rope.x0 + @Pm.rope.w/6       # back up rotation
-            vtta : 250                              # basket rotation velecity
+            yout:  @Pm.bsks.y3-75                  # for bascket in w branche and empty ; so return home
+            vtta : 250                              # basket rotation velocity
 
-        @vertices= [ -@pm.w/2+4,-@pm.h/2,  -@pm.w/2+10,@pm.h/2-5,  @pm.w/2-10,@pm.h/2-5,  @pm.w/2-4,-@pm.h/2 ] # body basket
+        @vertices= [ -@pm.w/2+6,-@pm.h/2,  -@pm.w/2+12,@pm.h/2-5,  @pm.w/2-12,@pm.h/2-5,  @pm.w/2-6,-@pm.h/2 ] # body basket
         @bsk = {}                                   #  one basket prototype
 
         @mk_bsk(@lstP ) # lstP for list oparameters of the basket
@@ -28,6 +29,7 @@ class Phacker.Game.OneBasket
         col = @gm.rnd.integerInRange(0,4) # define color basket
 
         @bsk = @gm.add.sprite lstP.x,lstP.y, @pm.names[col]
+        @bsk.alpha = 0
         @gm.physics.box2d.enable @bsk
         @bsk.body.setChain @vertices
         @bsk.body.kinematic = true
@@ -37,12 +39,19 @@ class Phacker.Game.OneBasket
 
         @bsk.body.pm={}
         @bsk.body.pm.branch = lstP.branch
+        @bsk.body.pm.i = lstP.i # id of basket
         @bsk.body.pm.color = col
         @bsk.body.pm.down =  false
         @bsk.body.pm.full =  []
 
         #@bsk.body.setBodyContactCallback(@btmO.btm, @btmCallback, @);
 
+    #.----------.----------
+    # start the baskets
+    #.----------.----------
+
+    anim:(bsk)->
+        @bsk.alpha = 1
         if       @bsk.body.pm.branch is 'E' then @bsk.body.setZeroVelocity() ;  @bsk.body.moveDown  @pm.v
         else if  @bsk.body.pm.branch is 'S' then @bsk.body.setZeroVelocity() ;  @bsk.body.moveLeft  @pm.v
         else if  @bsk.body.pm.branch is 'W' then @bsk.body.setZeroVelocity() ;  @bsk.body.moveUp    @pm.v
@@ -56,6 +65,9 @@ class Phacker.Game.OneBasket
     #.----------.----------
     move : () ->
         bskb = @bsk.body
+
+        #.----------.----------. North .----------.----------
+
         if bskb.pm.branch is 'N'
             if @bsk.x > @Pm.bsks.x2   # normal rot to south a the end of branch
                 bskb.setZeroVelocity()
@@ -72,7 +84,8 @@ class Phacker.Game.OneBasket
             else if @gm.math.fuzzyEqual @bsk.x, @pm.xrot2, 4 # stop rotation down
                 bskb.rotateLeft @pm.vtta
                 # free baskets of diamonds
-                for dmdb in bskb.pm.full then dmdb.in_bsk = false #diamond can replay
+                for dmdb in bskb.pm.full
+                    dmdb.pm.in_bsk = false #diamond can replay
                 bskb.pm.full = [] # empty basket array full
 
             else if @gm.math.fuzzyEqual bskb.angle, 0, 4 # rotate back up
@@ -80,41 +93,42 @@ class Phacker.Game.OneBasket
                 bskb.pm.down = false
                 bskb.angle = 0
 
+        #.----------.----------.  East .----------.----------
+
         else if bskb.pm.branch is 'E' and @bsk.y > @Pm.bsks.y3
             bskb.setZeroVelocity()
             bskb.moveLeft  @pm.v
             bskb.pm.branch = 'S'
+
+        #.----------.----------. South .----------.----------
 
         else if bskb.pm.branch is 'S' and @bsk.x < @Pm.bsks.x4
             bskb.setZeroVelocity()
             bskb.moveUp  @pm.v
             bskb.pm.branch = 'W'
 
-        else if bskb.pm.branch is 'W'
-            if bskb.pm.full.length is 0
-                bskb.setZeroVelocity()
-                bskb.moveLeft  @pm.v
-                bskb.moveDown  @pm.v
-                @bsk.body.pm.branch = 'X'        # no branch
-                #@gm.time.events.add Phaser.Timer.SECOND * 1, @throw_bsk, @
+        #.----------.----------.  West .----------.----------
 
-            else if @bsk.y < @Pm.bsks.y1
+        else if bskb.pm.branch is 'W'
+            if @gm.math.fuzzyEqual @bsk.y, @pm.yout
+                if bskb.pm.full.length is 0
+                    bskb.setZeroVelocity()
+                    bskb.moveLeft  @pm.v
+                    bskb.moveDown  @pm.v*2
+                    bskb.rotateLeft @pm.vtta
+                    @bsk.body.pm.branch = 'X'        # no branch
+                    #@gm.time.events.add Phaser.Timer.SECOND * 1, @throw_bsk, @
+
+            if @bsk.y < @Pm.bsks.y1
                 bskb.setZeroVelocity()
                 bskb.moveRight  @pm.v
                 bskb.pm.branch = 'N'
 
-        if  @bsk.body.pm.branch is 'X' and @bsk.y > @Pm.bsks.y3 + 30 # lost bsk
+        #.----------.----------.  Out .----------.----------
+
+        if  @bsk.body.pm.branch is 'X' and @bsk.y > @Pm.bsks.y3 + 150 # lost bsk
             @bsk.body.setZeroVelocity()
             @bsk.body.x = 100
             @bsk.body.y = -100
-
-
-    #.----------.----------
-    #thow away empty basket
-    #.----------.----------
-#    throw_bsk: () ->
-#
-#        @bsk.body.setZeroVelocity()
-#        @bsk.body.pm.branch = 'X'        # no branch
-#        @bsk.y = -700
+            bskb.rotateRight 0
 
