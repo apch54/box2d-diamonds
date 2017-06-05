@@ -1,6 +1,6 @@
 class Phacker.Game.Baskets
 
-    constructor: (@gm) ->
+    constructor: (@gm, @effO) ->
         @_fle_ = 'Baskets'
 
         @Pm = @gm.parameters    # globals parameters
@@ -46,6 +46,7 @@ class Phacker.Game.Baskets
         if dmdb.pm.in_bsk then return # already had scored
         dmdb.pm.in_bsk = true
         bskb.pm.full.push dmdb
+        @effO.play bskb, 3
         @Pm.msg.push 'win'
         #console.log @_fle_,': ',bskb.pm
 

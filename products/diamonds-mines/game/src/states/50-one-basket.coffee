@@ -72,7 +72,7 @@ class Phacker.Game.OneBasket
 
         bskb = @bsk.body
 
-        #.----------.----------. North .----------.----------
+        #.----------.----------. North branch  .----------.----------
 
         if bskb.pm.branch is 'N'
             if @bsk.x > @Pm.bsks.x2   # normal rot to south a the end of branch
@@ -99,21 +99,21 @@ class Phacker.Game.OneBasket
                 bskb.pm.down = false
                 bskb.angle = 0
 
-        #.----------.----------.  East .----------.----------
+        #.----------.----------.  East branch .----------.----------
 
         else if bskb.pm.branch is 'E' and @bsk.y > @Pm.bsks.y3
             bskb.setZeroVelocity()
             bskb.moveLeft  @pm.v
             bskb.pm.branch = 'S'
 
-        #.----------.----------. South .----------.----------
+        #.----------.----------. South branch .----------.----------
 
         else if bskb.pm.branch is 'S' and @bsk.x < @Pm.bsks.x4
             bskb.setZeroVelocity()
             bskb.moveUp  @pm.v
             bskb.pm.branch = 'W'
 
-        #.----------.----------.  West .----------.----------
+        #.----------.----------.  West branch .----------.----------
 
         else if bskb.pm.branch is 'W'
             if @gm.math.fuzzyEqual @bsk.y, @pm.yout
@@ -131,7 +131,7 @@ class Phacker.Game.OneBasket
                 bskb.moveRight  @pm.v
                 bskb.pm.branch = 'N'
 
-        #.----------.----------.  Out .----------.----------
+        #.----------.----------.  Out branch .----------.----------
 
         if  @bsk.body.pm.branch is 'X' and @bsk.y > @Pm.bsks.y3 + 150 # lost bsk
             @bsk.body.setZeroVelocity()
