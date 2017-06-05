@@ -576,7 +576,6 @@
 
     OneBasket.prototype.move = function() {
       var bskb, dmdb, i, len, ref;
-      console.log(this._fle_, ': ', this.Pm.bsks.dead_bsk, this.Pm.bsks.n, this.Pm.bsks.game_over);
       if ((this.Pm.bsks.dead_bsk === this.Pm.bsks.n) && !this.Pm.bsks.game_over) {
         this.Pm.bsks.game_over = true;
         this.Pm.msg.push('no bsk');
@@ -614,7 +613,7 @@
         bskb.moveUp(this.pm.v);
         bskb.pm.branch = 'W';
       } else if (bskb.pm.branch === 'W') {
-        if (this.gm.math.fuzzyEqual(this.bsk.y, this.pm.yout)) {
+        if (this.gm.math.fuzzyEqual(this.bsk.y, this.pm.yout, 4)) {
           if (bskb.pm.full.length === 0) {
             bskb.setZeroVelocity();
             bskb.moveLeft(this.pm.v);
@@ -633,8 +632,8 @@
       }
       if (this.bsk.body.pm.branch === 'X' && this.bsk.y > this.Pm.bsks.y3 + 150) {
         this.bsk.body.setZeroVelocity();
-        this.bsk.body.x = 100;
-        this.bsk.body.y = -100;
+        this.bsk.body.x = -300;
+        this.bsk.body.y = 1000;
         return bskb.rotateRight(0);
       }
     };
@@ -758,6 +757,81 @@
 
 }).call(this);
 
+
+/*  written by apch on 2017-06-05 */
+
+(function() {
+  Phacker.Game.Rules = (function() {
+    function Rules(gm, bsksO) {
+      this.gm = gm;
+      this.bsksO = bsksO;
+      this._fle_ = 'Rules';
+      this.Pm = this.gm.parameters;
+      this.pm = this.Pm.rls = {
+        dvx: 25,
+        lvl: 0,
+        v: this.Pm.bsks.v
+      };
+    }
+
+    Rules.prototype.check = function() {
+      switch (this.pm.lvl) {
+        case 0:
+          if (this.gm.ge.score < 90) {
+
+          } else {
+            this.speedup(this.bsksO.pm.v + this.pm.dvx);
+            return this.pm.lvl = 1;
+          }
+          break;
+        case 1:
+          if (this.gm.ge.score < 180) {
+
+          } else {
+            this.speedup(this.bsksO.pm.v + this.pm.dvx);
+            return this.pm.lvl = 2;
+          }
+      }
+    };
+
+    Rules.prototype.speedup = function(v0) {
+      var b, bdy, branch, i, len, ref, results;
+      ref = this.bsksO.bska;
+      results = [];
+      for (i = 0, len = ref.length; i < len; i++) {
+        b = ref[i];
+        bdy = b.bsk.body;
+        branch = bdy.pm.branch;
+        this.bsksO.pm.v = v0;
+        b.pm.v = v0;
+        console.log(this._fle_, ': ', this.bsksO.pm.v, b.pm.v);
+        switch (branch) {
+          case 'N':
+            results.push(bdy.moveRight(v0));
+            break;
+          case 'E':
+            results.push(bdy.moveDown(v0));
+            break;
+          case 'S':
+            results.push(bdy.moveLeft(v0));
+            break;
+          case 'W':
+            results.push(bdy.moveUp(v0));
+            break;
+          default:
+            bdy.moveDown(200);
+            results.push(bdy.moveLeft(100));
+        }
+      }
+      return results;
+    };
+
+    return Rules;
+
+  })();
+
+}).call(this);
+
 (function() {
   var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
@@ -778,16 +852,17 @@
         this.basketsO.move();
       }
       if ((msg = this.socleO.get_msg()) === 'win') {
-        return this.win();
+        this.win();
       } else if (msg === 'no dmd') {
-        return this.lostLife();
+        this.lostLife();
       } else if (msg === 'no bsk') {
-        return this.lostLife();
+        this.lostLife();
       } else if (msg === 'lost btm') {
-        return this.lost();
+        this.lost();
       } else if (msg === 'lost bsk') {
-        return this.lost();
+        this.lost();
       }
+      return this.rulesO.check();
     };
 
     YourGame.prototype.resetPlayer = function() {
@@ -808,6 +883,7 @@
       this.gateO = new Phacker.Game.Gate(this.game, this.mecanicO);
       this.basketsO = new Phacker.Game.Baskets(this.game, this.effectO);
       this.diamondsO = new Phacker.Game.Diamonds(this.game, this.bottomO, this.effectO);
+      this.rulesO = new Phacker.Game.Rules(this.game, this.basketsO);
       this.buttonO.bind(this.basketsO);
       this.basketsO.bind(this.diamondsO);
       return this.basketsO.create_callback(this.diamondsO.dmds);

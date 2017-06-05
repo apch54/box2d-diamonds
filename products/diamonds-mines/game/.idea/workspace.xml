@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="122e89c7-f58a-4dd9-a9b2-d99de275008b" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/states/50-one-basket.coffee" afterPath="$PROJECT_DIR$/src/states/45-one-basket.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/states/55-rules.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/game.js" afterPath="$PROJECT_DIR$/build/game.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/states/00-tools.coffee" afterPath="$PROJECT_DIR$/src/states/00-tools.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/states/45-one-basket.coffee" afterPath="$PROJECT_DIR$/src/states/45-one-basket.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/states/jeu.coffee" afterPath="$PROJECT_DIR$/src/states/jeu.coffee" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,87 +17,56 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.45745578">
+    <splitter split-orientation="horizontal" split-proportion="0.71643835">
       <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="45-one-basket.coffee" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/states/45-one-basket.coffee">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="38">
-                  <caret line="118" column="0" lean-forward="true" selection-start-line="118" selection-start-column="0" selection-end-line="118" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="game.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/build/game.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="342">
-                  <caret line="647" column="13" lean-forward="true" selection-start-line="647" selection-start-column="13" selection-end-line="647" selection-end-column="13" />
-                  <folding>
-                    <marker date="1496696946025" expanded="true" signature="14223:18850" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="14264:18843" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="16374:18814" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="18000:18577" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="18065:18412" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="18108:18402" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="18455:18569" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="18659:18808" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="18877:22075" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="18917:22068" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="18957:19618" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="19125:19564" ph="{&quot;msg_n&quot;: 'ok'...}" />
-                    <marker date="1496696946025" expanded="true" signature="19662:20102" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="19701:19726" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="19801:19924" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="20152:21245" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="20440:21217" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="20462:20659" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="20515:20609" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="20615:20649" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="20677:20886" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="20735:20836" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="20842:20876" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="20904:21113" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="20962:21063" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="21069:21103" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="21302:21775" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="21863:22040" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="21889:21914" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="22468:24318" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="22649:23211" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="22806:22845" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="22897:22933" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="22961:23002" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="23030:23071" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="23101:23205" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="23262:23315" ph="{...}" />
-                    <marker date="1496696946025" expanded="true" signature="23361:24290" ph="{...}" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="40-baskets.coffee" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/states/40-baskets.coffee">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-34">
-                  <caret line="40" column="0" lean-forward="true" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
+        <splitter split-orientation="horizontal" split-proportion="0.49760765">
+          <split-first>
+            <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+              <file leaf-file-name="jeu.coffee" pinned="false" current-in-tab="false">
+                <entry file="file://$PROJECT_DIR$/src/states/jeu.coffee">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state relative-caret-position="198">
+                      <caret line="11" column="18" lean-forward="false" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="18" />
+                      <folding />
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+              <file leaf-file-name="55-rules.coffee" pinned="false" current-in-tab="true">
+                <entry file="file://$PROJECT_DIR$/src/states/55-rules.coffee">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state relative-caret-position="522">
+                      <caret line="53" column="36" lean-forward="false" selection-start-line="53" selection-start-column="36" selection-end-line="53" selection-end-column="36" />
+                      <folding />
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+            </leaf>
+          </split-first>
+          <split-second>
+            <leaf>
+              <file leaf-file-name="45-one-basket.coffee" pinned="false" current-in-tab="true">
+                <entry file="file://$PROJECT_DIR$/src/states/45-one-basket.coffee">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state relative-caret-position="380">
+                      <caret line="141" column="30" lean-forward="false" selection-start-line="141" selection-start-column="30" selection-end-line="141" selection-end-column="30" />
+                      <folding />
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+            </leaf>
+          </split-second>
+        </splitter>
       </split-first>
       <split-second>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="jeu.coffee" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/states/jeu.coffee">
+        <leaf>
+          <file leaf-file-name="40-baskets.coffee" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/states/40-baskets.coffee">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="216">
-                  <caret line="12" column="32" lean-forward="false" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
+                <state relative-caret-position="414">
+                  <caret line="74" column="19" lean-forward="true" selection-start-line="74" selection-start-column="19" selection-end-line="74" selection-end-column="19" />
                   <folding />
                 </state>
               </provider>
@@ -132,6 +101,7 @@
       <find>dmd</find>
       <find>bsk</find>
       <find>dead</find>
+      <find>cons</find>
     </findStrings>
     <replaceStrings>
       <replace>had_</replace>
@@ -171,8 +141,9 @@
         <option value="$PROJECT_DIR$/src/states/25-bottom.coffee" />
         <option value="$PROJECT_DIR$/src/states/50-diamonds.coffee" />
         <option value="$PROJECT_DIR$/src/states/00-tools.coffee" />
-        <option value="$PROJECT_DIR$/src/states/45-one-basket.coffee" />
         <option value="$PROJECT_DIR$/src/states/jeu.coffee" />
+        <option value="$PROJECT_DIR$/src/states/55-rules.coffee" />
+        <option value="$PROJECT_DIR$/src/states/45-one-basket.coffee" />
       </list>
     </option>
   </component>
@@ -194,9 +165,9 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="301" />
+    <option name="x" value="28" />
     <option name="y" value="79" />
-    <option name="width" value="1459" />
+    <option name="width" value="1732" />
     <option name="height" value="981" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -410,7 +381,7 @@
       <workItem from="1496600987207" duration="16657000" />
       <workItem from="1496639874205" duration="23653000" />
       <workItem from="1496682561276" duration="2859000" />
-      <workItem from="1496694350241" duration="2792000" />
+      <workItem from="1496694350241" duration="8409000" />
     </task>
     <task id="LOCAL-00001" summary="again here">
       <created>1495185153936</created>
@@ -573,18 +544,25 @@
       <option name="project" value="LOCAL" />
       <updated>1496695191968</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="lost bask">
+      <created>1496697176061</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1496697176061</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="179767000" />
+    <option name="totallyTimeSpent" value="185384000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="301" y="79" width="1459" height="981" extended-state="0" />
+    <frame x="28" y="79" width="1732" height="981" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17740817" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14918415" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -699,7 +677,8 @@
     <MESSAGE value="gameover bsks" />
     <MESSAGE value="effects not finished" />
     <MESSAGE value="effects bascket" />
-    <option name="LAST_COMMIT_MESSAGE" value="effects bascket" />
+    <MESSAGE value="lost bask" />
+    <option name="LAST_COMMIT_MESSAGE" value="lost bask" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -708,7 +687,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/states/05-socle.coffee" />
     <entry file="file://$PROJECT_DIR$/src/states/15-baskets.coffee" />
     <entry file="file://$PROJECT_DIR$/src/states/10-one-basket.coffee" />
     <entry file="file://$PROJECT_DIR$/src/states/25_diamonds.coffee" />
@@ -825,44 +803,46 @@
         <state relative-caret-position="342">
           <caret line="647" column="13" lean-forward="true" selection-start-line="647" selection-start-column="13" selection-end-line="647" selection-end-column="13" />
           <folding>
-            <marker date="1496696946025" expanded="true" signature="14223:18850" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="14264:18843" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="16374:18814" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="18000:18577" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="18065:18412" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="18108:18402" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="18455:18569" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="18659:18808" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="18877:22075" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="18917:22068" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="18957:19618" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="19125:19564" ph="{&quot;msg_n&quot;: 'ok'...}" />
-            <marker date="1496696946025" expanded="true" signature="19662:20102" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="19701:19726" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="19801:19924" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="20152:21245" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="20440:21217" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="20462:20659" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="20515:20609" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="20615:20649" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="20677:20886" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="20735:20836" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="20842:20876" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="20904:21113" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="20962:21063" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="21069:21103" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="21302:21775" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="21863:22040" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="21889:21914" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="22468:24318" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="22649:23211" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="22806:22845" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="22897:22933" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="22961:23002" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="23030:23071" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="23101:23205" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="23262:23315" ph="{...}" />
-            <marker date="1496696946025" expanded="true" signature="23361:24290" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="14223:16417" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="14264:16417" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="16374:16417" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="18000:18577" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="18065:18412" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="18108:18402" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="18455:18569" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="18659:18808" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="18877:22075" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="18917:22068" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="18957:19618" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="19125:19564" ph="{&quot;msg_n&quot;: 'ok'...}" />
+            <marker date="1496702655359" expanded="true" signature="19662:20102" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="19701:19726" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="19801:19924" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="20152:21245" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="20440:21217" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="20462:20659" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="20515:20609" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="20615:20649" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="20677:20886" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="20735:20836" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="20842:20876" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="20904:21113" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="20962:21063" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="21069:21103" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="21302:21775" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="21863:22040" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="21889:21914" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="25841:26049" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="25841:26025" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="24070:24145" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="24190:24752" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="24347:24386" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="24438:24474" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="24502:24543" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="24571:24612" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="24642:24746" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="24803:24856" ph="{...}" />
+            <marker date="1496702655359" expanded="true" signature="25841:25997" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -875,26 +855,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/states/40-baskets.coffee">
+    <entry file="file://$PROJECT_DIR$/src/states/jeu.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-34">
-          <caret line="40" column="0" lean-forward="true" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+        <state relative-caret-position="198">
+          <caret line="11" column="18" lean-forward="false" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="18" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/states/jeu.coffee">
+    <entry file="file://$PROJECT_DIR$/src/states/40-baskets.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="12" column="32" lean-forward="false" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
+        <state relative-caret-position="414">
+          <caret line="74" column="19" lean-forward="true" selection-start-line="74" selection-start-column="19" selection-end-line="74" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/states/55-rules.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="522">
+          <caret line="53" column="36" lean-forward="false" selection-start-line="53" selection-start-column="36" selection-end-line="53" selection-end-column="36" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/states/45-one-basket.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38">
-          <caret line="118" column="0" lean-forward="true" selection-start-line="118" selection-start-column="0" selection-end-line="118" selection-end-column="0" />
+        <state relative-caret-position="380">
+          <caret line="141" column="30" lean-forward="false" selection-start-line="141" selection-start-column="30" selection-end-line="141" selection-end-column="30" />
           <folding />
         </state>
       </provider>

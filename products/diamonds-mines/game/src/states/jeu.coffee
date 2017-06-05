@@ -12,6 +12,8 @@ class @YourGame extends Phacker.GameState
         else if msg is 'lost btm'               then @lost()
         else if msg is 'lost bsk'               then @lost()
 
+        @rulesO.check()
+
         #@game.debug.box2dWorld()
         #@game.debug.body @btm
 
@@ -30,10 +32,11 @@ class @YourGame extends Phacker.GameState
         @bottomO    = new   Phacker.Game.Bottom     @game
         @mecanicO   = new   Phacker.Game.Mecanic    @game
         @buttonO    = new   Phacker.Game.Buttom     @game
-        @gateO      = new   Phacker.Game.Gate       @game,  @mecanicO
-        @basketsO   = new   Phacker.Game.Baskets    @game,  @effectO
-        @diamondsO  = new   Phacker.Game.Diamonds   @game,  @bottomO,    @effectO
-#
+        @gateO      = new   Phacker.Game.Gate       @game,   @mecanicO
+        @basketsO   = new   Phacker.Game.Baskets    @game,   @effectO
+        @diamondsO  = new   Phacker.Game.Diamonds   @game,   @bottomO,    @effectO
+        @rulesO     = new   Phacker.Game.Rules      @game,   @basketsO
+
         @buttonO.bind @basketsO
         @basketsO.bind @diamondsO
         @basketsO.create_callback @diamondsO.dmds

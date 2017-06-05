@@ -65,7 +65,7 @@ class Phacker.Game.OneBasket
     #.----------.----------
     move : () ->
         # Game over ?
-        console.log @_fle_,': ',@Pm.bsks.dead_bsk,@Pm.bsks.n,@Pm.bsks.game_over
+        #console.log @_fle_,': ',@Pm.bsks.dead_bsk,@Pm.bsks.n,@Pm.bsks.game_over
         if (@Pm.bsks.dead_bsk is @Pm.bsks.n) and not @Pm.bsks.game_over
             @Pm.bsks.game_over = true
             @Pm.msg.push 'no bsk' # no more diamonds
@@ -118,7 +118,7 @@ class Phacker.Game.OneBasket
         else if bskb.pm.branch is 'W'
 
             # at the beginning of branch basket is empty
-            if @gm.math.fuzzyEqual @bsk.y, @pm.yout
+            if @gm.math.fuzzyEqual @bsk.y, @pm.yout, 4
                 if bskb.pm.full.length is 0
                     bskb.setZeroVelocity()
                     bskb.moveLeft  @pm.v
@@ -138,7 +138,8 @@ class Phacker.Game.OneBasket
 
         if  @bsk.body.pm.branch is 'X' and @bsk.y > @Pm.bsks.y3 + 150 # lost bsk
             @bsk.body.setZeroVelocity()
-            @bsk.body.x = 100
-            @bsk.body.y = -100
+            @bsk.body.x = -300
+            @bsk.body.y = 1000
+
             bskb.rotateRight 0
 
