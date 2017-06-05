@@ -777,7 +777,7 @@
     Rules.prototype.check = function() {
       switch (this.pm.lvl) {
         case 0:
-          if (this.gm.ge.score < 90) {
+          if (this.gm.ge.score < 100) {
 
           } else {
             this.speedup(this.bsksO.pm.v + this.pm.dvx);
@@ -804,7 +804,6 @@
         branch = bdy.pm.branch;
         this.bsksO.pm.v = v0;
         b.pm.v = v0;
-        console.log(this._fle_, ': ', this.bsksO.pm.v, b.pm.v);
         switch (branch) {
           case 'N':
             results.push(bdy.moveRight(v0));

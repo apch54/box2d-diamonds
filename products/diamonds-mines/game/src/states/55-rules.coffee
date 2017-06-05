@@ -21,7 +21,7 @@ class Phacker.Game.Rules
 
         switch @pm.lvl
             when 0
-                if @gm.ge.score < 90 then return
+                if @gm.ge.score < 100 then return
                 else
                     @speedup(@bsksO.pm.v + @pm.dvx)
                     @pm.lvl = 1
@@ -41,7 +41,6 @@ class Phacker.Game.Rules
             branch =bdy.pm.branch
             @bsksO.pm.v = v0
             b.pm.v = v0
-            console.log @_fle_,': ',@bsksO.pm.v, b.pm.v
             #bdy.setZeroVelocity()
 
             switch branch

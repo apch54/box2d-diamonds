@@ -5,9 +5,9 @@ define('PRODUCT', 'diamonds-mines');
 
 $gameOptions = array(
 	'duration' => 80,
-	'pointEarned' => 2,
+	'pointEarned' => 3,
     'pointLost' => 1,
-	'pointToLevel1' => 200,
+	'pointToLevel1' => 250,
     'winningLevel' =>1,
     'timingTemps'=> false,
     'percentToNextLevel' => 1.5,
