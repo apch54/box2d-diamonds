@@ -24,12 +24,13 @@ class @YourGame extends Phacker.GameState
 
         @socleO     = new   Phacker.Game.Socle      @game
         @ropeO      = new   Phacker.Game.Rope       @game
+        @effectO    = new   Phacker.Game.Effects    @game
         @bottomO    = new   Phacker.Game.Bottom     @game
         @mecanicO   = new   Phacker.Game.Mecanic    @game
         @buttonO    = new   Phacker.Game.Buttom     @game
         @gateO      = new   Phacker.Game.Gate       @game, @mecanicO
         @basketsO   = new   Phacker.Game.Baskets    @game
-        @diamondsO  = new   Phacker.Game.Diamonds   @game, @bottomO
+        @diamondsO  = new   Phacker.Game.Diamonds   @game, @bottomO,@effectO
 #
         @buttonO.bind @basketsO
         @basketsO.bind @diamondsO

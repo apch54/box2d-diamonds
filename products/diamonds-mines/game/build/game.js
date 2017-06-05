@@ -587,9 +587,10 @@
 
 (function() {
   Phacker.Game.Diamonds = (function() {
-    function Diamonds(gm, btmO) {
+    function Diamonds(gm, btmO, effO) {
       this.gm = gm;
       this.btmO = btmO;
+      this.effO = effO;
       this._fle_ = 'Diamonds';
       this.Pm = this.gm.parameters;
       this.pm = this.Pm.dmds = {
@@ -686,10 +687,61 @@
         return;
       }
       dmdb.pm.dead = true;
+      this.effO.play(btmb);
       return this.pm.n_in--;
     };
 
     return Diamonds;
+
+  })();
+
+}).call(this);
+
+(function() {
+  Phacker.Game.Effects = (function() {
+    function Effects(gm) {
+      this.gm = gm;
+      this._fle_ = 'Effect';
+      this.effects = ['effect1', 'effect3', 'effect4', 'effect5'];
+      this.last_eff_time = 0;
+      this.delay = 250;
+    }
+
+    Effects.prototype.play = function(obj, n) {
+      var anim, eff, nowt;
+      nowt = new Date().getTime();
+      if (n == null) {
+        n = this.gm.rnd.integerInRange(0, 2);
+      }
+      if (!(n === 3) && (nowt - this.last_eff_time < this.delay)) {
+        return;
+      } else if (n !== 3) {
+        this.last_eff_time = nowt;
+      }
+      switch (n) {
+        case 0:
+        case 1:
+          eff = this.gm.add.sprite(50, 100, this.effects[n], 2);
+          anim = eff.animations.add('explode', [2, 1, 0, 1], 8, false);
+          break;
+        case 2:
+          eff = this.gm.add.sprite(50, 100, this.effects[n], 4);
+          anim = eff.animations.add('explode', [4, 3, 2, 1, 0, 1, 2, 3], 16, false);
+          break;
+        case 3:
+          eff = this.gm.add.sprite(50, 100, this.effects[n], 3);
+          anim = eff.animations.add('explode', [3, 2, 1, 0, 1, 2], 12, false);
+      }
+      eff.anchor.setTo(0.5, 0.5);
+      anim.onComplete.add(function() {
+        return eff.destroy();
+      }, this);
+      eff.x = obj.x;
+      eff.y = obj.y;
+      return eff.animations.play('explode');
+    };
+
+    return Effects;
 
   })();
 
@@ -734,12 +786,13 @@
       this.game.physics.box2d.gravity.y = this.game.gameOptions.gravityY;
       this.socleO = new Phacker.Game.Socle(this.game);
       this.ropeO = new Phacker.Game.Rope(this.game);
+      this.effectO = new Phacker.Game.Effects(this.game);
       this.bottomO = new Phacker.Game.Bottom(this.game);
       this.mecanicO = new Phacker.Game.Mecanic(this.game);
       this.buttonO = new Phacker.Game.Buttom(this.game);
       this.gateO = new Phacker.Game.Gate(this.game, this.mecanicO);
       this.basketsO = new Phacker.Game.Baskets(this.game);
-      this.diamondsO = new Phacker.Game.Diamonds(this.game, this.bottomO);
+      this.diamondsO = new Phacker.Game.Diamonds(this.game, this.bottomO, this.effectO);
       this.buttonO.bind(this.basketsO);
       this.basketsO.bind(this.diamondsO);
       return this.basketsO.create_callback(this.diamondsO.dmds);
