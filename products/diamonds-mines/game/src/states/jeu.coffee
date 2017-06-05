@@ -6,9 +6,12 @@ class @YourGame extends Phacker.GameState
         @diamondsO.check()
         @basketsO.move() if @buttonO.pm.game_started
 #
-        if (msg =  @socleO.get_msg()) is 'win' then @win()
-        else if msg is 'no dmd' then @lostLife()
-        else if msg is 'no bsk' then @lostLife()
+        if (msg =  @socleO.get_msg()) is 'win'  then @win()
+        else if msg is 'no dmd'                 then @lostLife()
+        else if msg is 'no bsk'                 then @lostLife()
+        else if msg is 'lost btm'               then @lost()
+        else if msg is 'lost bsk'               then @lost()
+
         #@game.debug.box2dWorld()
         #@game.debug.body @btm
 

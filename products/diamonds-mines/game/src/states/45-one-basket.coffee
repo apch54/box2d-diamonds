@@ -116,12 +116,15 @@ class Phacker.Game.OneBasket
         #.----------.----------.  West branch .----------.----------
 
         else if bskb.pm.branch is 'W'
+
+            # at the beginning of branch basket is empty
             if @gm.math.fuzzyEqual @bsk.y, @pm.yout
                 if bskb.pm.full.length is 0
                     bskb.setZeroVelocity()
                     bskb.moveLeft  @pm.v
                     bskb.moveDown  @pm.v*2
                     bskb.rotateLeft @pm.vtta
+                    @Pm.msg.push 'lost bsk'          # we have lost a bascket
                     @bsk.body.pm.branch = 'X'        # no branch
                     @Pm.bsks.dead_bsk++
                     #@gm.time.events.add Phaser.Timer.SECOND * 1, @throw_bsk, @
