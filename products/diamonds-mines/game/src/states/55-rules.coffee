@@ -4,7 +4,6 @@ class Phacker.Game.Rules
 
     constructor: (@gm, @bsksO) ->
         @_fle_ = 'Rules'
-
         @Pm = @gm.parameters        # globals parameters
         @pm = @Pm.rls =
             #vx:     @bsksO.bska     # initial basket velocity

@@ -415,9 +415,10 @@
 
 (function() {
   Phacker.Game.Baskets = (function() {
-    function Baskets(gm, effO) {
+    function Baskets(gm, effO, bonusO) {
       this.gm = gm;
       this.effO = effO;
+      this.bonusO = bonusO;
       this._fle_ = 'Baskets';
       this.Pm = this.gm.parameters;
       this.pm = this.Pm.bsks = {
@@ -433,7 +434,8 @@
         v: this.gm.gameOptions.vx0,
         "in": 1,
         dead_bsk: 0,
-        game_over: false
+        game_over: false,
+        n_diamonds_for_bonus: this.gm.gameOptions.n_diamonds_for_bonus
       };
       this.bska = [];
       this.mk_bsk();
@@ -476,10 +478,16 @@
       if (dmdb.pm.in_bsk) {
         return;
       }
-      dmdb.pm.in_bsk = true;
-      bskb.pm.full.push(dmdb);
-      this.effO.play(bskb, 3);
-      return this.Pm.msg.push('win');
+      if ((bskb.pm.full.length === this.pm.n_diamonds_for_bonus) && (this.gm.ge.score > 10) && !bskb.pm.had_bonus) {
+        this.Pm.msg.push('bonus');
+        bskb.pm.had_bonus = true;
+        return this.bonusO.draw_bonus(bskb);
+      } else {
+        dmdb.pm.in_bsk = true;
+        bskb.pm.full.push(dmdb);
+        this.effO.play(bskb, 3);
+        return this.Pm.msg.push('win');
+      }
     };
 
     Baskets.prototype.anim = function(n) {
@@ -554,7 +562,8 @@
       this.bsk.body.pm.i = lstP.i;
       this.bsk.body.pm.color = col;
       this.bsk.body.pm.down = false;
-      return this.bsk.body.pm.full = [];
+      this.bsk.body.pm.full = [];
+      return this.bsk.body.pm.had_bonus = false;
     };
 
     OneBasket.prototype.anim = function(bsk) {
@@ -599,6 +608,7 @@
             dmdb.pm.in_bsk = false;
           }
           bskb.pm.full = [];
+          bskb.pm.had_bonus = false;
         } else if (this.gm.math.fuzzyEqual(bskb.angle, 0, 4)) {
           bskb.rotateLeft(0);
           bskb.pm.down = false;
@@ -831,6 +841,47 @@
 
 }).call(this);
 
+
+/*  written by apch  on 2017-05-28 */
+
+(function() {
+  Phacker.Game.Bonus = (function() {
+    function Bonus(gm, bonus) {
+      this.gm = gm;
+      this.bonus = bonus;
+      this._fle_ = 'Bonus';
+      this.Pm = this.gm.parameters;
+    }
+
+    Bonus.prototype.draw_bonus = function(obj) {
+      var dx, mvt, style, tw, xx;
+      xx = obj.x - 21;
+      style = {
+        font: "15px Arial",
+        fill: "#ffff00",
+        align: "center"
+      };
+      this.text = this.gm.add.text(xx, obj.y - 45, "Bonus", style);
+      this.text.anchor.set(0.5);
+      this.text.alpha = 1;
+      dx = -this.Pm.bsks.v / 7;
+      mvt = {
+        alpha: [0, 1, 0, 1, 0, 1, 0],
+        angle: [0, 0, 20, -20, 20, 180, 360],
+        x: [xx + dx, xx + 2 * dx, xx + 3 * dx, xx + 4 * dx, xx + 5 * dx, xx + 6 * dx, xx + 7 * dx]
+      };
+      tw = this.gm.add.tween(this.text).to(mvt, 1000, "Linear", true);
+      return tw.onComplete.add(function() {
+        return this.text.destroy();
+      }, this);
+    };
+
+    return Bonus;
+
+  })();
+
+}).call(this);
+
 (function() {
   var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
@@ -880,7 +931,8 @@
       this.mecanicO = new Phacker.Game.Mecanic(this.game);
       this.buttonO = new Phacker.Game.Buttom(this.game);
       this.gateO = new Phacker.Game.Gate(this.game, this.mecanicO);
-      this.basketsO = new Phacker.Game.Baskets(this.game, this.effectO);
+      this.bonusO = new Phacker.Game.Bonus(this.game);
+      this.basketsO = new Phacker.Game.Baskets(this.game, this.effectO, this.bonusO);
       this.diamondsO = new Phacker.Game.Diamonds(this.game, this.bottomO, this.effectO);
       this.rulesO = new Phacker.Game.Rules(this.game, this.basketsO);
       this.buttonO.bind(this.basketsO);

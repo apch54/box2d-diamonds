@@ -43,6 +43,7 @@ class Phacker.Game.OneBasket
         @bsk.body.pm.color = col
         @bsk.body.pm.down =  false
         @bsk.body.pm.full =  []
+        @bsk.body.pm.had_bonus = false
 
         #@bsk.body.setBodyContactCallback(@btmO.btm, @btmCallback, @);
 
@@ -93,6 +94,7 @@ class Phacker.Game.OneBasket
                 for dmdb in bskb.pm.full
                     dmdb.pm.in_bsk = false #diamond can replay
                 bskb.pm.full = [] # empty basket array full
+                bskb.pm.had_bonus = false
 
             else if @gm.math.fuzzyEqual bskb.angle, 0, 4 # rotate back up
                 bskb.rotateLeft 0

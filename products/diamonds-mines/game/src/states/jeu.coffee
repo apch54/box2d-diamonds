@@ -33,13 +33,15 @@ class @YourGame extends Phacker.GameState
         @mecanicO   = new   Phacker.Game.Mecanic    @game
         @buttonO    = new   Phacker.Game.Buttom     @game
         @gateO      = new   Phacker.Game.Gate       @game,   @mecanicO
-        @basketsO   = new   Phacker.Game.Baskets    @game,   @effectO
+        @bonusO     = new   Phacker.Game.Bonus      @game
+        @basketsO   = new   Phacker.Game.Baskets    @game,   @effectO,    @bonusO
         @diamondsO  = new   Phacker.Game.Diamonds   @game,   @bottomO,    @effectO
         @rulesO     = new   Phacker.Game.Rules      @game,   @basketsO
 
+
         @buttonO.bind @basketsO
         @basketsO.bind @diamondsO
-        @basketsO.create_callback @diamondsO.dmds
+        @basketsO.create_callback @diamondsO.dmds # 700 callbacks created
 #        @mecanicO.bind @diamondsO
 
         #@gateO.bind @mecanicO

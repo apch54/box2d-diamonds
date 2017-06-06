@@ -1,6 +1,6 @@
 class Phacker.Game.Baskets
 
-    constructor: (@gm, @effO) ->
+    constructor: (@gm, @effO, @bonusO) ->
         @_fle_ = 'Baskets'
 
         @Pm = @gm.parameters    # globals parameters
@@ -14,6 +14,8 @@ class Phacker.Game.Baskets
             in:1
             dead_bsk:0
             game_over: false
+            n_diamonds_for_bonus: @gm.gameOptions.n_diamonds_for_bonus
+
 
 
         #@pm.bsk_remaining = @pm.n
@@ -44,10 +46,18 @@ class Phacker.Game.Baskets
     #.----------.----------
     bskCallback: (bskb, dmdb, fixture1, fixture2, begin)->
         if dmdb.pm.in_bsk then return # already had scored
-        dmdb.pm.in_bsk = true
-        bskb.pm.full.push dmdb
-        @effO.play bskb, 3
-        @Pm.msg.push 'win'
+
+        if (bskb.pm.full.length is @pm.n_diamonds_for_bonus) and (@gm.ge.score > 10) and not bskb.pm.had_bonus
+            @Pm.msg.push 'bonus'            # score a bonus
+            bskb.pm.had_bonus = true
+
+            @bonusO.draw_bonus bskb         # draw bonus animation on basket
+
+        else
+            dmdb.pm.in_bsk = true
+            bskb.pm.full.push dmdb
+            @effO.play bskb, 3
+            @Pm.msg.push 'win'
         #console.log @_fle_,': ',bskb.pm
 
     #.----------.----------
