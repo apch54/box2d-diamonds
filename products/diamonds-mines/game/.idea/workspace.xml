@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="122e89c7-f58a-4dd9-a9b2-d99de275008b" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/game.js" afterPath="$PROJECT_DIR$/build/game.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/states/40-baskets.coffee" afterPath="$PROJECT_DIR$/src/states/40-baskets.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/states/45-one-basket.coffee" afterPath="$PROJECT_DIR$/src/states/45-one-basket.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/states/jeu.coffee" afterPath="$PROJECT_DIR$/src/states/jeu.coffee" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -158,8 +154,8 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="194" />
-    <option name="y" value="308" />
+    <option name="x" value="223" />
+    <option name="y" value="119" />
     <option name="width" value="1559" />
     <option name="height" value="914" />
   </component>
@@ -384,7 +380,7 @@
       <workItem from="1496740054542" duration="44000" />
       <workItem from="1496740175110" duration="344000" />
       <workItem from="1496759301494" duration="6914000" />
-      <workItem from="1496777558741" duration="9259000" />
+      <workItem from="1496777558741" duration="9550000" />
     </task>
     <task id="LOCAL-00001" summary="again here">
       <created>1495185153936</created>
@@ -603,14 +599,21 @@
       <option name="project" value="LOCAL" />
       <updated>1496766889829</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="fix out collision">
+      <created>1496786877930</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1496786877930</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="206827000" />
+    <option name="totallyTimeSpent" value="207118000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="194" y="308" width="1559" height="914" extended-state="0" />
+    <frame x="223" y="119" width="1559" height="914" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -708,7 +711,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="balls mvt" />
     <MESSAGE value="shivering ball" />
     <MESSAGE value="speedup" />
     <MESSAGE value="speedup 2" />
@@ -733,7 +735,8 @@
     <MESSAGE value="rules" />
     <MESSAGE value="fix overlap basket error" />
     <MESSAGE value="fix basket lostlife error" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix basket lostlife error" />
+    <MESSAGE value="fix out collision" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix out collision" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -850,6 +853,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="234">
           <caret line="20" column="29" lean-forward="false" selection-start-line="20" selection-start-column="29" selection-end-line="20" selection-end-column="29" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -857,6 +861,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="5" column="24" lean-forward="true" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
+          <folding />
         </state>
       </provider>
     </entry>
