@@ -8,10 +8,10 @@ class @YourGame extends Phacker.GameState
 #
         msg =  @socleO.get_msg()
         switch msg
-            when 'win'                     then @win()
-            when 'no dmd', 'no bsk'        then @lostLife()
-            when 'lost btm', 'lost bsk'    then @lost()
-            when 'bonus'                   then @winBonus()
+            when 'win'                          then @win()
+            when 'no dmd', 'no bsk', 'lost bsk' then @lostLife()
+            when 'lost btm'                     then @lost()
+            when 'bonus'                        then @winBonus()
 
 
         @rulesO.check()

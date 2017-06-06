@@ -82,7 +82,7 @@ class Phacker.Game.Baskets
                 @pm.in++
 
         for b in @bska
-            b.move()
+            b.move() if b.bsk.body?
 
     #.----------.----------
     # move all baskets

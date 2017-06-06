@@ -14,8 +14,6 @@ class Phacker.Game.Socle
         @pm.x0 = @pm.w2
 
         @draw_bg()
-
-        console.log @_fle_,': ',@gm
     #.----------.----------
     # build socle
     #.----------.----------

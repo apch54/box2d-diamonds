@@ -17,7 +17,7 @@ class Phacker.Game.Rules
     # checks rules an score to accelerate
     #.----------.----------
     check: ->
-        console.log @_fle_,': ',@gm.ge.score, @Pm.bsks.in , @Pm.bsks.n
+        #console.log @_fle_,': ',@gm.ge.score, @Pm.bsks.in , @Pm.bsks.n
         switch @pm.lvl
             when 0
                 if (@gm.ge.score < 10) or (@Pm.bsks.in < @Pm.bsks.n) then return

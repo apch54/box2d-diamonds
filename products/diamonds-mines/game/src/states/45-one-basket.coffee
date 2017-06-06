@@ -129,7 +129,6 @@ class Phacker.Game.OneBasket
                     @Pm.msg.push 'lost bsk'          # we have lost a bascket
                     @bsk.body.pm.branch = 'X'        # no branch
                     @Pm.bsks.dead_bsk++
-                    #@gm.time.events.add Phaser.Timer.SECOND * 1, @throw_bsk, @
 
             if @bsk.y < @Pm.bsks.y1
                 bskb.setZeroVelocity()
@@ -139,9 +138,13 @@ class Phacker.Game.OneBasket
         #.----------.----------.  Out branch .----------.----------
 
         if  @bsk.body.pm.branch is 'X' and @bsk.y > @Pm.bsks.y3 + 150 # lost bsk
-            @bsk.body.setZeroVelocity()
-            @bsk.body.x = -300
-            @bsk.body.y = 1000
+
+            if @bsk.body?
+                @bsk.body.destroy()
+#                @bsk.body.setZeroVelocity()
+#                @bsk.body.x = -1000
+#                @bsk.body.y = 1000
+
 
             bskb.rotateRight 0
 

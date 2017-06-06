@@ -68,7 +68,6 @@
       this.pm.w2 = this.pm.w / 2;
       this.pm.x0 = this.pm.w2;
       this.draw_bg();
-      console.log(this._fle_, ': ', this.gm);
     }
 
     Socle.prototype.draw_bg = function() {
@@ -509,7 +508,11 @@
       results = [];
       for (i = 0, len = ref.length; i < len; i++) {
         b = ref[i];
-        results.push(b.move());
+        if (b.bsk.body != null) {
+          results.push(b.move());
+        } else {
+          results.push(void 0);
+        }
       }
       return results;
     };
@@ -642,9 +645,9 @@
         }
       }
       if (this.bsk.body.pm.branch === 'X' && this.bsk.y > this.Pm.bsks.y3 + 150) {
-        this.bsk.body.setZeroVelocity();
-        this.bsk.body.x = -300;
-        this.bsk.body.y = 1000;
+        if (this.bsk.body != null) {
+          this.bsk.body.destroy();
+        }
         return bskb.rotateRight(0);
       }
     };
@@ -786,7 +789,6 @@
     }
 
     Rules.prototype.check = function() {
-      console.log(this._fle_, ': ', this.gm.ge.score, this.Pm.bsks["in"], this.Pm.bsks.n);
       switch (this.pm.lvl) {
         case 0:
           if ((this.gm.ge.score < 10) || (this.Pm.bsks["in"] < this.Pm.bsks.n)) {
@@ -910,10 +912,10 @@
           break;
         case 'no dmd':
         case 'no bsk':
+        case 'lost bsk':
           this.lostLife();
           break;
         case 'lost btm':
-        case 'lost bsk':
           this.lost();
           break;
         case 'bonus':
