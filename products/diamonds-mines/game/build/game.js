@@ -478,7 +478,7 @@
       if (dmdb.pm.in_bsk) {
         return;
       }
-      if ((bskb.pm.full.length === this.pm.n_diamonds_for_bonus) && (this.gm.ge.score > 10) && !bskb.pm.had_bonus) {
+      if ((bskb.pm.full.length === this.pm.n_diamonds_for_bonus) && (this.gm.ge.score > 50) && !bskb.pm.had_bonus) {
         this.Pm.msg.push('bonus');
         bskb.pm.had_bonus = true;
         return this.bonusO.draw_bonus(bskb);

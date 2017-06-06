@@ -7,7 +7,7 @@ class Phacker.Game.Rules
         @Pm = @gm.parameters        # globals parameters
         @pm = @Pm.rls =
             #vx:     @bsksO.bska     # initial basket velocity
-            dvx:    25               # variation of vx0
+            dvx:    25             # variation of vx0
             #scr:    @gm.ge.score
             lvl:    0                # level inside one game
             v  :    @Pm.bsks.v       # from gameOptions

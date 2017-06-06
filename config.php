@@ -12,12 +12,12 @@ $gameOptions = array(
     'timingTemps'=> false,
     'percentToNextLevel' => 1.5,
     'life' => 1,
-    'pointBonus' => 5,
+    'pointBonus' => 8,
 
     //Here You can add new specific parameters
     'vx0' 					=> 60,			// initial basket velocity 
     'gravityY'				=> 1500,    	// system gravity
-    'n_diamonds_for_bonus' 	=> 10			// number of diamonds in basket to score a bonus
+    'n_diamonds_for_bonus' 	=> 9			// number of diamonds in basket to score a bonus
 
 
 );
