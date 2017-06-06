@@ -478,6 +478,21 @@
       if (dmdb.pm.in_bsk) {
         return;
       }
+      if (dmdb.y < bskb.y - 22) {
+        dmdb.x = bskb.x;
+        dmdb.y += 20;
+      } else if (bskb.x - 14 > dmdb.x) {
+        return;
+      }
+      if (bskb.x + 14 < dmdb.x) {
+        return;
+      }
+      if (dmdb.y > bskb.y + 21) {
+        return;
+      }
+      if (bskb.pm.branch !== 'S') {
+        return;
+      }
       if ((bskb.pm.full.length === this.pm.n_diamonds_for_bonus) && (this.gm.ge.score > 50) && !bskb.pm.had_bonus) {
         this.Pm.msg.push('bonus');
         bskb.pm.had_bonus = true;
@@ -489,6 +504,25 @@
         return this.Pm.msg.push('win');
       }
     };
+
+    Baskets.prototype.collide_out = function(bskb, dmdb) {
+      return true;
+      if (dmdb.y < bskb.y - 22) {
+        dmdb.x = bskb.x;
+        dmdb.y += 20;
+        return false;
+      }
+      if (bskb.x - 14 > dmdb.x) {
+        return true;
+      } else if (bskb.x + 14 < dmdb.x) {
+        return true;
+      }
+      if (dmdb.y > bskb.y + 21) {
+        return true;
+      }
+    };
+
+    Baskets.prototype.collide_out = function(dmd, bsk) {};
 
     Baskets.prototype.anim = function(n) {
       return this.bska[n].anim();
@@ -547,7 +581,7 @@
         yout: this.Pm.bsks.y3 - 75,
         vtta: 250
       };
-      this.vertices = [-this.pm.w / 2 + 6, -this.pm.h / 2, -this.pm.w / 2 + 12, this.pm.h / 2 - 5, this.pm.w / 2 - 12, this.pm.h / 2 - 5, this.pm.w / 2 - 6, -this.pm.h / 2];
+      this.vertices = [-this.pm.w / 2 + 7, -this.pm.h / 2, -this.pm.w / 2 + 7, this.pm.h / 2 - 4, this.pm.w / 2 - 7, this.pm.h / 2 - 4, this.pm.w / 2 - 7, -this.pm.h / 2];
       this.bsk = {};
       this.mk_bsk(this.lstP);
     }
@@ -646,9 +680,8 @@
       }
       if (this.bsk.body.pm.branch === 'X' && this.bsk.y > this.Pm.bsks.y3 + 150) {
         if (this.bsk.body != null) {
-          this.bsk.body.destroy();
+          return this.bsk.body.destroy();
         }
-        return bskb.rotateRight(0);
       }
     };
 
@@ -910,8 +943,6 @@
         case 'win':
           this.win();
           break;
-        case 'no dmd':
-        case 'no bsk':
         case 'lost bsk':
           this.lostLife();
           break;
@@ -920,6 +951,10 @@
           break;
         case 'bonus':
           this.winBonus();
+          break;
+        case 'no dmd':
+        case 'no bsk':
+          this.endGame();
       }
       return this.rulesO.check();
     };

@@ -16,7 +16,7 @@ class Phacker.Game.OneBasket
             vtta : 250                              # basket rotation velocity
 
 
-        @vertices= [ -@pm.w/2+6,-@pm.h/2,  -@pm.w/2+12,@pm.h/2-5,  @pm.w/2-12,@pm.h/2-5,  @pm.w/2-6,-@pm.h/2 ] # body basket
+        @vertices= [ -@pm.w/2+7,-@pm.h/2,  -@pm.w/2+7,@pm.h/2-4,  @pm.w/2-7,@pm.h/2-4,  @pm.w/2-7,-@pm.h/2 ] # body basket
         @bsk = {}                                   #  one basket prototype
 
         @mk_bsk(@lstP ) # lstP for list oparameters of the basket
@@ -144,7 +144,6 @@ class Phacker.Game.OneBasket
 #                @bsk.body.setZeroVelocity()
 #                @bsk.body.x = -1000
 #                @bsk.body.y = 1000
+                 #bskb.rotateRight 0
 
-
-            bskb.rotateRight 0
 
