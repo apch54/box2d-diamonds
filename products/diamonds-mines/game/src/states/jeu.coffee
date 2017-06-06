@@ -25,6 +25,15 @@ class @YourGame extends Phacker.GameState
     create: ->
         super() #Required
         @_fle_ = 'create'
+
+        # ---------- hack ----------
+        @scoreText.setText(@game.ge.score)
+        @scoreText.y = @statusBar.height*0.5 - @scoreText.height*0.5
+
+        @levelText.setText(@game.ge.level)
+        @levelText.y = @statusBar.height*0.5 - @levelText.height*0.5
+        #---------------------------
+
         @game.physics.startSystem(Phaser.Physics.BOX2D)
         @game.physics.box2d.gravity.y = @game.gameOptions.gravityY
 

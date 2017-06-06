@@ -11,7 +11,7 @@ $gameOptions = array(
     'winningLevel' =>1,
     'timingTemps'=> false,
     'percentToNextLevel' => 1.5,
-    'life' => 1,
+    'life' => 3,
     'pointBonus' => 8,
 
     //Here You can add new specific parameters

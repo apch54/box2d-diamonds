@@ -68,6 +68,7 @@
       this.pm.w2 = this.pm.w / 2;
       this.pm.x0 = this.pm.w2;
       this.draw_bg();
+      console.log(this._fle_, ': ', this.gm);
     }
 
     Socle.prototype.draw_bg = function() {
@@ -778,16 +779,17 @@
       this._fle_ = 'Rules';
       this.Pm = this.gm.parameters;
       this.pm = this.Pm.rls = {
-        dvx: 25,
+        dvx: 30,
         lvl: 0,
         v: this.Pm.bsks.v
       };
     }
 
     Rules.prototype.check = function() {
+      console.log(this._fle_, ': ', this.gm.ge.score, this.Pm.bsks["in"], this.Pm.bsks.n);
       switch (this.pm.lvl) {
         case 0:
-          if (this.gm.ge.score < 100) {
+          if ((this.gm.ge.score < 10) || (this.Pm.bsks["in"] < this.Pm.bsks.n)) {
 
           } else {
             this.speedup(this.bsksO.pm.v + this.pm.dvx);
@@ -855,7 +857,7 @@
 
     Bonus.prototype.draw_bonus = function(obj) {
       var dx, mvt, style, tw, xx;
-      xx = obj.x - 21;
+      xx = obj.x;
       style = {
         font: "15px Arial",
         fill: "#ffff00",
@@ -927,6 +929,10 @@
     YourGame.prototype.create = function() {
       YourGame.__super__.create.call(this);
       this._fle_ = 'create';
+      this.scoreText.setText(this.game.ge.score);
+      this.scoreText.y = this.statusBar.height * 0.5 - this.scoreText.height * 0.5;
+      this.levelText.setText(this.game.ge.level);
+      this.levelText.y = this.statusBar.height * 0.5 - this.levelText.height * 0.5;
       this.game.physics.startSystem(Phaser.Physics.BOX2D);
       this.game.physics.box2d.gravity.y = this.game.gameOptions.gravityY;
       this.socleO = new Phacker.Game.Socle(this.game);

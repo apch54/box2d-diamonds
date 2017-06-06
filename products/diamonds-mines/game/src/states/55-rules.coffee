@@ -7,7 +7,7 @@ class Phacker.Game.Rules
         @Pm = @gm.parameters        # globals parameters
         @pm = @Pm.rls =
             #vx:     @bsksO.bska     # initial basket velocity
-            dvx:    25             # variation of vx0
+            dvx:    30             # variation of vx0
             #scr:    @gm.ge.score
             lvl:    0                # level inside one game
             v  :    @Pm.bsks.v       # from gameOptions
@@ -17,10 +17,10 @@ class Phacker.Game.Rules
     # checks rules an score to accelerate
     #.----------.----------
     check: ->
-
+        console.log @_fle_,': ',@gm.ge.score, @Pm.bsks.in , @Pm.bsks.n
         switch @pm.lvl
             when 0
-                if @gm.ge.score < 100 then return
+                if (@gm.ge.score < 10) or (@Pm.bsks.in < @Pm.bsks.n) then return
                 else
                     @speedup(@bsksO.pm.v + @pm.dvx)
                     @pm.lvl = 1

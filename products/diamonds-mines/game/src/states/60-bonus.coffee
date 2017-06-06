@@ -12,7 +12,7 @@ class Phacker.Game.Bonus
 #.----------.----------
 
     draw_bonus:(obj) ->
-        xx= obj.x-21
+        xx= obj.x
         #console.log @_fle_,': ',xx, obj
 
         style = { font: "15px Arial", fill: "#ffff00", align: "center" }
