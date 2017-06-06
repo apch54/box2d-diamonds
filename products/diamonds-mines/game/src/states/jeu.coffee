@@ -6,11 +6,13 @@ class @YourGame extends Phacker.GameState
         @diamondsO.check()
         @basketsO.move() if @buttonO.pm.game_started
 #
-        if (msg =  @socleO.get_msg()) is 'win'  then @win()
-        else if msg is 'no dmd'                 then @lostLife()
-        else if msg is 'no bsk'                 then @lostLife()
-        else if msg is 'lost btm'               then @lost()
-        else if msg is 'lost bsk'               then @lost()
+        msg =  @socleO.get_msg()
+        switch msg
+            when 'win'                     then @win()
+            when 'no dmd', 'no bsk'        then @lostLife()
+            when 'lost btm', 'lost bsk'    then @lost()
+            when 'bonus'                   then @winBonus()
+
 
         @rulesO.check()
 
@@ -37,7 +39,6 @@ class @YourGame extends Phacker.GameState
         @basketsO   = new   Phacker.Game.Baskets    @game,   @effectO,    @bonusO
         @diamondsO  = new   Phacker.Game.Diamonds   @game,   @bottomO,    @effectO
         @rulesO     = new   Phacker.Game.Rules      @game,   @basketsO
-
 
         @buttonO.bind @basketsO
         @basketsO.bind @diamondsO

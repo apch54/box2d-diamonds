@@ -901,16 +901,21 @@
       if (this.buttonO.pm.game_started) {
         this.basketsO.move();
       }
-      if ((msg = this.socleO.get_msg()) === 'win') {
-        this.win();
-      } else if (msg === 'no dmd') {
-        this.lostLife();
-      } else if (msg === 'no bsk') {
-        this.lostLife();
-      } else if (msg === 'lost btm') {
-        this.lost();
-      } else if (msg === 'lost bsk') {
-        this.lost();
+      msg = this.socleO.get_msg();
+      switch (msg) {
+        case 'win':
+          this.win();
+          break;
+        case 'no dmd':
+        case 'no bsk':
+          this.lostLife();
+          break;
+        case 'lost btm':
+        case 'lost bsk':
+          this.lost();
+          break;
+        case 'bonus':
+          this.winBonus();
       }
       return this.rulesO.check();
     };

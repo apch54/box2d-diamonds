@@ -47,10 +47,10 @@ class Phacker.Game.Baskets
     bskCallback: (bskb, dmdb, fixture1, fixture2, begin)->
         if dmdb.pm.in_bsk then return # already had scored
 
+        # bonus here had been recieved
         if (bskb.pm.full.length is @pm.n_diamonds_for_bonus) and (@gm.ge.score > 10) and not bskb.pm.had_bonus
             @Pm.msg.push 'bonus'            # score a bonus
             bskb.pm.had_bonus = true
-
             @bonusO.draw_bonus bskb         # draw bonus animation on basket
 
         else
