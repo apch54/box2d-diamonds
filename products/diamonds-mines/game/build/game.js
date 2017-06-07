@@ -481,6 +481,8 @@
       if (dmdb.y < bskb.y - 22) {
         dmdb.x = bskb.x;
         dmdb.y += 20;
+        dmdb.setZeroVelocity();
+        dmdb.moveDown(200);
       } else if (bskb.x - 14 > dmdb.x) {
         return;
       }
@@ -504,25 +506,6 @@
         return this.Pm.msg.push('win');
       }
     };
-
-    Baskets.prototype.collide_out = function(bskb, dmdb) {
-      return true;
-      if (dmdb.y < bskb.y - 22) {
-        dmdb.x = bskb.x;
-        dmdb.y += 20;
-        return false;
-      }
-      if (bskb.x - 14 > dmdb.x) {
-        return true;
-      } else if (bskb.x + 14 < dmdb.x) {
-        return true;
-      }
-      if (dmdb.y > bskb.y + 21) {
-        return true;
-      }
-    };
-
-    Baskets.prototype.collide_out = function(dmd, bsk) {};
 
     Baskets.prototype.anim = function(n) {
       return this.bska[n].anim();

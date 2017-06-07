@@ -50,11 +50,12 @@ class Phacker.Game.Baskets
         #test collide out
         if dmdb.y < bskb.y-22
             dmdb.x = bskb.x ; dmdb.y += 20
+            dmdb.setZeroVelocity()
+            dmdb.moveDown  200
         else if bskb.x-14 > dmdb.x  then return
         if bskb.x+14 < dmdb.x  then return
         if dmdb.y > bskb.y+21 then return
         if bskb.pm.branch isnt 'S' then return
-
 
         # bonus here had been recieved
         if (bskb.pm.full.length is @pm.n_diamonds_for_bonus) and (@gm.ge.score > 50) and not bskb.pm.had_bonus
@@ -62,6 +63,7 @@ class Phacker.Game.Baskets
             bskb.pm.had_bonus = true
             @bonusO.draw_bonus bskb         # draw bonus animation on basket
 
+        # win part
         else
             dmdb.pm.in_bsk = true
             bskb.pm.full.push dmdb
@@ -69,23 +71,23 @@ class Phacker.Game.Baskets
             @Pm.msg.push 'win'
         #console.log @_fle_,': ',bskb.pm
 
-    #.----------.----------
-    # check if collision is out
-    #.----------.----------
-    collide_out: (bskb, dmdb) -> # bodies of diamond and bascket
-        return true
-        if dmdb.y < bskb.y-22
-            dmdb.x = bskb.x ; dmdb.y += 20
-            return false
-        if bskb.x-14 > dmdb.x  then return true
-        else if bskb.x+14 < dmdb.x  then return true
-        if dmdb.y > bskb.y+21 then return true
-
-
-#.----------.----------
-    # check if collision is out
-    #.----------.----------
-    collide_out: (dmd, bsk) -> # bodies of diamond and bascket
+#    #.----------.----------
+#    # check if collision is out
+#    #.----------.----------
+#    collide_out: (bskb, dmdb) -> # bodies of diamond and bascket
+#        return true
+#        if dmdb.y < bskb.y-22
+#            dmdb.x = bskb.x ; dmdb.y += 20
+#            return false
+#        if bskb.x-14 > dmdb.x  then return true
+#        else if bskb.x+14 < dmdb.x  then return true
+#        if dmdb.y > bskb.y+21 then return true
+#
+#
+#    #.----------.----------
+#    # check if collision is out
+#    #.----------.----------
+#    collide_out: (dmd, bsk) -> # bodies of diamond and bascket
 
     #.----------.----------
     # start moving the basket ## for greenbutton mainly
